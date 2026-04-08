@@ -7,9 +7,11 @@
 
 <style>
 
+/* GLOBAL */
+
 body{
 margin:0;
-font-family:Arial, Helvetica, sans-serif;
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
 background-image:url("{% static 'images/city.jpg' %}");
 background-size:cover;
@@ -30,26 +32,43 @@ top:0;
 left:0;
 width:100%;
 height:100%;
-background:rgba(0,0,0,0.45);
+background:rgba(0,0,0,0.5);
 z-index:-1;
 }
 
 /* NAVBAR */
 
 .navbar{
-background:rgba(0,0,0,0.35);
-backdrop-filter:blur(6px);
+background:rgba(0,0,0,0.4);
+backdrop-filter:blur(8px);
 padding:18px;
 display:flex;
 justify-content:center;
+gap:30px;
 }
 
 .navbar a{
 color:white;
 text-decoration:none;
-margin:0 25px;
 font-size:18px;
-font-weight:bold;
+font-weight:600;
+position:relative;
+transition:0.3s;
+}
+
+.navbar a::after{
+content:"";
+position:absolute;
+width:0%;
+height:2px;
+bottom:-5px;
+left:0;
+background:#f39c12;
+transition:0.3s;
+}
+
+.navbar a:hover::after{
+width:100%;
 }
 
 .navbar a:hover{
@@ -69,34 +88,113 @@ padding:40px;
 /* GLASS CARD */
 
 .card{
-background:rgba(255,255,255,0.15);
-backdrop-filter:blur(12px);
--webkit-backdrop-filter:blur(12px);
+background:rgba(255,255,255,0.12);
+backdrop-filter:blur(14px);
+-webkit-backdrop-filter:blur(14px);
 
 padding:40px;
-width:65%;
+width:70%;
 
-border-radius:15px;
+border-radius:20px;
 border:1px solid rgba(255,255,255,0.25);
 
 color:white;
 
-box-shadow:0 8px 32px rgba(0,0,0,0.35);
+box-shadow:0 10px 40px rgba(0,0,0,0.4);
 }
+
+/* HEADINGS */
 
 .card h1,
 .card h2,
 .card h3{
 color:white;
+margin-top:0;
 }
+
+/* BUTTON */
+
+button{
+background:#f39c12;
+border:none;
+padding:8px 14px;
+color:white;
+font-weight:bold;
+border-radius:8px;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+background:#e67e22;
+}
+
+/* LINK BUTTON */
+
+a.button-link{
+background:#3498db;
+padding:6px 10px;
+border-radius:6px;
+color:white;
+text-decoration:none;
+}
+
+a.button-link:hover{
+background:#2980b9;
+}
+
+/* TABLE */
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:10px;
+}
+
+th, td{
+padding:12px;
+text-align:left;
+border:1px solid rgba(255,255,255,0.2);
+}
+
+th{
+background:rgba(0,0,0,0.3);
+}
+
+tr:hover{
+background:rgba(255,255,255,0.08);
+}
+
+/* FORM */
+
+select{
+padding:6px;
+border-radius:6px;
+border:none;
+}
+
+/* STATUS BADGE */
+
+.status{
+padding:5px 10px;
+border-radius:8px;
+font-size:12px;
+font-weight:bold;
+}
+
+.status.REPORTED{ background:#e74c3c; }
+.status.VERIFIED{ background:#f1c40f; color:black; }
+.status.IN_PROGRESS{ background:#3498db; }
+.status.RESOLVED{ background:#2ecc71; }
 
 /* FOOTER */
 
 footer{
-background:rgba(0,0,0,0.5);
+background:rgba(0,0,0,0.6);
 text-align:center;
 color:white;
 padding:15px;
+font-size:14px;
 }
 
 </style>
@@ -106,28 +204,22 @@ padding:15px;
 <body>
 
 <div class="navbar">
-
-<a href="/">Home</a>
-<a href="/about/">About</a>
-<a href="/contacts/">Contact</a>
-
+    <a href="/">Home</a>
+    <a href="/about/">About</a>
+    <a href="/contacts/">Contact</a>
 </div>
 
 <div class="container">
-
 <div class="card">
 
 {% block content %}
 {% endblock %}
 
 </div>
-
 </div>
 
 <footer>
-
-© 2026 CivicTrack Smart City System
-
+© 2026 CivicTrack Smart City System • Built with Django
 </footer>
 
 </body>

@@ -1,0 +1,14 @@
+{% extends "main_app/base.html" %}
+
+{% block content %}
+
+<h1>{{ object.title }}</h1>
+
+<p><b>Kategori:</b> {{ object.category }}</p>
+<p><b>Deskripsi:</b> {{ object.description }}</p>
+<p><b>Lokasi:</b> {{ object.location }}</p>
+<p><b>Status:</b> {{ object.status }}</p>
+
+<a href="/">Kembali</a>
+
+{% endblock %}

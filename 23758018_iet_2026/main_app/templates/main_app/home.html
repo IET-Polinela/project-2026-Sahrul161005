@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<h1>Smart City Issue Reporting</h1>
+<h1>Dream City</h1>
 
 <h3>CivicTrack Platform</h3>
 
@@ -18,22 +18,67 @@ infrastruktur kota dan membantu pemerintah kota dalam menindaklanjuti
 masalah secara lebih efektif dan transparan.
 </p>
 
-<h3>Jenis Laporan yang Dapat Dibuat</h3>
+<h3>Jenis Laporan</h3>
 
 <ul>
-
 <li>🛣️ Jalan rusak</li>
 <li>💡 Lampu jalan mati</li>
 <li>🗑️ Sampah menumpuk</li>
 <li>🌧️ Banjir lokal</li>
 <li>🏞️ Fasilitas umum rusak</li>
-
 </ul>
 
-<p>
-Dengan kolaborasi antara warga dan pengelola kota,
-kita dapat menciptakan kota yang lebih aman, bersih,
-dan nyaman untuk semua.
-</p>
+<br>
+
+<a href="/add/" style="color:yellow; font-weight:bold;">+ Tambah Laporan</a>
+
+<hr>
+
+<h2>Daftar Laporan</h2>
+
+<table style="width:100%; border-collapse:collapse; color:white;">
+<tr>
+    <th>Judul</th>
+    <th>Kategori</th>
+    <th>Lokasi</th>
+    <th>Status</th>
+    <th>Aksi</th>
+</tr>
+
+{% for report in reports %}
+<tr>
+    <td>{{ report.title }}</td>
+    <td>{{ report.category }}</td>
+    <td>{{ report.location }}</td>
+
+    <!-- STATUS WORKFLOW (SUDAH FIX) -->
+    <td>
+        <form method="POST" action="/update-status/{{ report.id }}/">
+            {% csrf_token %}
+            <select name="status">
+                {% for key, value in status_choices %}
+                <option value="{{ key }}" {% if report.status == key %}selected{% endif %}>
+                    {{ value }}
+                </option>
+                {% endfor %}
+            </select>
+            <button type="submit">✔</button>
+        </form>
+    </td>
+
+    <td>
+        <a href="/detail/{{ report.id }}/" style="color:lightblue;">Detail</a> |
+        <a href="/edit/{{ report.id }}/" style="color:lightblue;">Edit</a> |
+        <a href="/delete/{{ report.id }}/" style="color:red;">Delete</a>
+    </td>
+</tr>
+
+{% empty %}
+<tr>
+    <td colspan="5">Belum ada laporan</td>
+</tr>
+{% endfor %}
+
+</table>
 
 {% endblock %}

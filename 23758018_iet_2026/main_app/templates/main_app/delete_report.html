@@ -2,16 +2,14 @@
 
 {% block content %}
 
-<h1>Hapus Laporan</h1>
+<h2>Hapus Laporan</h2>
 
 <p>Yakin ingin menghapus "{{ object.title }}"?</p>
 
 <form method="POST">
     {% csrf_token %}
-    <button type="submit">Ya, Hapus</button>
-    <a href="/" class="button-link">Batal</a>
+    <button class="btn btn-danger">Hapus</button>
+    <a href="/" class="btn btn-secondary">Batal</a>
 </form>
-
-
 
 {% endblock %}

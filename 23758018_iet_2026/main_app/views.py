@@ -1,10 +1,10 @@
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from django.views import View
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404, redirect
 from .models import Report
 
-# LIST (READ)
+# HOME
 class ReportListView(ListView):
     model = Report
     template_name = 'main_app/home.html'
@@ -20,6 +20,11 @@ class ReportListView(ListView):
 class ReportDetailView(DetailView):
     model = Report
     template_name = 'main_app/detail_report.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['status_choices'] = Report._meta.get_field('status').choices
+        return context
 
 
 # CREATE

@@ -2,27 +2,17 @@
 
 {% block content %}
 
-<!-- HEADER / HERO -->
-<div class="mb-4 p-4 bg-white shadow-sm rounded">
-    <h2>🌆 Smart City Issue Reporting</h2>
-    <p class="text-muted">
-        Laporkan masalah kota seperti jalan rusak, sampah, atau fasilitas umum
-        dengan mudah dan bantu menciptakan lingkungan yang lebih baik.
-    </p>
-</div>
+<h2 class="mb-3">Daftar Laporan Kota</h2>
 
-<!-- BUTTON -->
-<div class="mb-3">
-    <a href="/add/" class="btn btn-primary">
-        <i class="bi bi-plus-circle"></i> Tambah Laporan
-    </a>
-</div>
+<a href="/add/" class="btn btn-primary mb-3">
+    + Tambah Laporan
+</a>
 
 {% if reports %}
 
 <div class="table-responsive">
 <table class="table table-striped table-bordered table-hover bg-white shadow-sm">
-
+    
     <thead class="table-dark">
         <tr>
             <th>Judul</th>
@@ -56,18 +46,9 @@
 
         <!-- AKSI -->
         <td>
-
-            <a href="/detail/{{ report.id }}/" class="btn btn-sm btn-info">
-                <i class="bi bi-eye"></i>
-            </a>
-
-            <a href="/edit/{{ report.id }}/" class="btn btn-sm btn-warning">
-                <i class="bi bi-pencil"></i>
-            </a>
-
-            <a href="/delete/{{ report.id }}/" class="btn btn-sm btn-danger">
-                <i class="bi bi-trash"></i>
-            </a>
+            <a href="/detail/{{ report.id }}/" class="btn btn-sm btn-info">Detail</a>
+            <a href="/edit/{{ report.id }}/" class="btn btn-sm btn-warning">Edit</a>
+            <a href="/delete/{{ report.id }}/" class="btn btn-sm btn-danger">Delete</a>
 
             <!-- WORKFLOW -->
             {% if report.status == "REPORTED" %}
@@ -103,9 +84,9 @@
 
 {% else %}
 
-<div class="alert alert-info text-center">
-    <h5>Belum ada laporan</h5>
-    <p>Silakan tambahkan laporan pertama kamu</p>
+<div class="alert alert-info">
+    Belum ada laporan.
+    <br><br>
     <a href="/add/" class="btn btn-primary">Tambah Laporan</a>
 </div>
 

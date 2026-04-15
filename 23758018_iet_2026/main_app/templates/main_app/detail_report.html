@@ -2,13 +2,45 @@
 
 {% block content %}
 
-<h1>{{ object.title }}</h1>
+<h2 class="mb-4">Detail Laporan</h2>
 
-<p><b>Kategori:</b> {{ object.category }}</p>
-<p><b>Deskripsi:</b> {{ object.description }}</p>
-<p><b>Lokasi:</b> {{ object.location }}</p>
-<p><b>Status:</b> {{ object.status }}</p>
+<div class="card shadow-sm">
+    <div class="card-body">
 
-<a href="/" class="button-link">⬅ Kembali ke Home</a>
+        <h4 class="card-title">{{ object.title }}</h4>
+
+        <hr>
+
+        <p><b>Kategori:</b> {{ object.category }}</p>
+        <p><b>Deskripsi:</b><br> {{ object.description }}</p>
+        <p><b>Lokasi:</b> {{ object.location }}</p>
+
+        <p><b>Status:</b>
+            {% if object.status == "REPORTED" %}
+                <span class="badge bg-danger">Reported</span>
+            {% elif object.status == "VERIFIED" %}
+                <span class="badge bg-warning text-dark">Verified</span>
+            {% elif object.status == "IN_PROGRESS" %}
+                <span class="badge bg-primary">In Progress</span>
+            {% elif object.status == "RESOLVED" %}
+                <span class="badge bg-success">Resolved</span>
+            {% endif %}
+        </p>
+
+        <p><b>Dibuat pada:</b> {{ object.created_at }}</p>
+
+    </div>
+</div>
+
+<br>
+
+<!-- ACTION BUTTON -->
+<a href="/" class="btn btn-secondary">⬅ Kembali</a>
+<a href="/edit/{{ object.id }}/" class="btn btn-warning">✏ Edit</a>
+
+<form method="POST" action="/delete/{{ object.id }}/" class="d-inline">
+    {% csrf_token %}
+    <button class="btn btn-danger">🗑 Delete</button>
+</form>
 
 {% endblock %}

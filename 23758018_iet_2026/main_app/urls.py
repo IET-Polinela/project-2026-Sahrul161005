@@ -10,7 +10,8 @@ from .views import (
 )
 
 urlpatterns = [
-    path('', ReportListView.as_view(), name='report_list'),
+    path('', views.ReportListView.as_view(), name='home'),
+    path('reports/', ReportListView.as_view(), name='report_list'),
     path('detail/<int:pk>/', ReportDetailView.as_view(), name='report_detail'),
     path('add/', ReportCreateView.as_view(), name='add_report'),
     path('edit/<int:pk>/', ReportUpdateView.as_view(), name='edit_report'),

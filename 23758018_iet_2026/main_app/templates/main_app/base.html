@@ -1,226 +1,168 @@
-{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>CivicTrack - Smart City Issue Reporting</title>
+    <title>CivicTrack</title>
 
-<style>
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-/* GLOBAL */
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 
-body{
-margin:0;
-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    <style>
+        :root {
+            --bs-primary: #185FD6;
+            --bs-primary-rgb: 24, 95, 214;
+        }
 
-background-image:url("{% static 'images/city.jpg' %}");
-background-size:cover;
-background-position:center;
-background-attachment:fixed;
+        body {
+            background-color: #f5f7fa;
+        }
 
-display:flex;
-flex-direction:column;
-min-height:100vh;
-}
+        .navbar.navbar-dark.bg-dark {
+            background-color: #185FD6 !important;
+        }
 
-/* DARK OVERLAY */
+        .btn-primary,
+        .bg-primary,
+        .badge.bg-primary,
+        .card-header.bg-primary {
+            background-color: #185FD6 !important;
+            border-color: #185FD6 !important;
+        }
 
-body::before{
-content:"";
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.5);
-z-index:-1;
-}
+        .btn-primary:hover,
+        .bg-primary:hover,
+        .badge.bg-primary:hover,
+        .card-header.bg-primary:hover {
+            background-color: #144fb0 !important;
+            border-color: #144fb0 !important;
+        }
 
-/* NAVBAR */
+        .text-primary {
+            color: #185FD6 !important;
+        }
 
-.navbar{
-background:rgba(0,0,0,0.4);
-backdrop-filter:blur(8px);
-padding:18px;
-display:flex;
-justify-content:center;
-gap:30px;
-}
+        .table-responsive {
+            border-radius: 18px;
+            overflow: hidden;
+            border: 1px solid rgba(24, 95, 214, 0.12);
+            box-shadow: 0 10px 30px rgba(24, 95, 214, 0.08);
+        }
 
-.navbar a{
-color:white;
-text-decoration:none;
-font-size:18px;
-font-weight:600;
-position:relative;
-transition:0.3s;
-}
+        .table {
+            border-collapse: separate;
+            border-spacing: 0;
+            background-color: #ffffff;
+        }
 
-.navbar a::after{
-content:"";
-position:absolute;
-width:0%;
-height:2px;
-bottom:-5px;
-left:0;
-background:#f39c12;
-transition:0.3s;
-}
+        .table thead th {
+            background: linear-gradient(135deg, #185FD6 0%, #3B80F7 100%);
+            color: #ffffff;
+            border: none;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
 
-.navbar a:hover::after{
-width:100%;
-}
+        .table tbody tr {
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
 
-.navbar a:hover{
-color:#f39c12;
-}
+        .table tbody tr:hover {
+            background-color: rgba(24, 95, 214, 0.08);
+            transform: translateX(2px);
+        }
 
-/* CONTENT */
+        .table td,
+        .table th {
+            border-top: 1px solid rgba(24, 95, 214, 0.12);
+            vertical-align: middle;
+            padding: 0.65rem 0.75rem;
+            font-size: 0.95rem;
+        }
 
-.container{
-flex:1;
-display:flex;
-justify-content:center;
-align-items:center;
-padding:40px;
-}
+        .table.table-striped tbody tr:nth-of-type(odd) {
+            background-color: rgba(24, 95, 214, 0.04);
+        }
 
-/* GLASS CARD */
+        .table-striped-columns tbody tr:hover > *:nth-child(odd) {
+            background-color: rgba(24, 95, 214, 0.08);
+        }
 
-.card{
-background:rgba(255,255,255,0.12);
-backdrop-filter:blur(14px);
--webkit-backdrop-filter:blur(14px);
+        .table tbody tr:last-child td {
+            border-bottom: none;
+        }
 
-padding:40px;
-width:70%;
-
-border-radius:20px;
-border:1px solid rgba(255,255,255,0.25);
-
-color:white;
-
-box-shadow:0 10px 40px rgba(0,0,0,0.4);
-}
-
-/* HEADINGS */
-
-.card h1,
-.card h2,
-.card h3{
-color:white;
-margin-top:0;
-}
-
-/* BUTTON */
-
-button{
-background:#f39c12;
-border:none;
-padding:8px 14px;
-color:white;
-font-weight:bold;
-border-radius:8px;
-cursor:pointer;
-transition:0.3s;
-}
-
-button:hover{
-background:#e67e22;
-}
-
-/* LINK BUTTON */
-
-a.button-link{
-background:#3498db;
-padding:6px 10px;
-border-radius:6px;
-color:white;
-text-decoration:none;
-}
-
-a.button-link:hover{
-background:#2980b9;
-}
-
-/* TABLE */
-
-table{
-width:100%;
-border-collapse:collapse;
-margin-top:10px;
-}
-
-th, td{
-padding:12px;
-text-align:left;
-border:1px solid rgba(255,255,255,0.2);
-}
-
-th{
-background:rgba(0,0,0,0.3);
-}
-
-tr:hover{
-background:rgba(255,255,255,0.08);
-}
-
-/* FORM */
-
-select{
-padding:6px;
-border-radius:6px;
-border:none;
-}
-
-/* STATUS BADGE */
-
-.status{
-padding:5px 10px;
-border-radius:8px;
-font-size:12px;
-font-weight:bold;
-}
-
-.status.REPORTED{ background:#e74c3c; }
-.status.VERIFIED{ background:#f1c40f; color:black; }
-.status.IN_PROGRESS{ background:#3498db; }
-.status.RESOLVED{ background:#2ecc71; }
-
-/* FOOTER */
-
-footer{
-background:rgba(0,0,0,0.6);
-text-align:center;
-color:white;
-padding:15px;
-font-size:14px;
-}
-
-</style>
+        .table td .btn,
+        .table td .badge {
+            min-width: 3rem;
+        }
+    </style>
 
 </head>
 
-<body>
+<body style="background-color:#f5f7fa;">
 
-<div class="navbar">
-    <a href="/">Home</a>
-    <a href="/about/">About</a>
-    <a href="/contacts/">Contact</a>
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="/">🌆 CivicTrack</a>
+
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="nav">
+            <ul class="navbar-nav ms-auto align-items-center">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/about/">About</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/contacts/">Contact</a>
+                </li>
+
+                <li class="nav-item ms-2">
+                    <a href="/add/" class="btn btn-primary">
+                        <i class="bi bi-plus-circle"></i> Report
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- ALERT -->
+<div class="container mt-3">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success alert-dismissible fade show shadow-sm">
+                {{ message }}
+                <button class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
 </div>
 
-<div class="container">
-<div class="card">
-
-{% block content %}
-{% endblock %}
-
-</div>
+<!-- CONTENT -->
+<div class="container mt-4">
+    {% block content %}{% endblock %}
 </div>
 
-<footer>
-© 2026 CivicTrack Smart City System • Built with Django
+<!-- FOOTER -->
+<footer class="text-center mt-5 mb-3 text-muted">
+    © 2026 CivicTrack Smart City System
 </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

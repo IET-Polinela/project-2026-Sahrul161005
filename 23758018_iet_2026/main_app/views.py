@@ -6,9 +6,18 @@ from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib import messages
 from .models import Report
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect
 
+
+class AdminRequiredMixin:
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_admin:
+            messages.error(request, "Akses hanya untuk admin!")
+            return redirect('home')
+        return super().dispatch(request, *args, **kwargs)
 # HOME
-class HomeView(ListView):
+class HomeView(LoginRequiredMixin, ListView):
     model = Report
     template_name = 'main_app/home.html'
     context_object_name = 'reports'
@@ -22,7 +31,7 @@ class HomeView(ListView):
         return context
 
 # LIST REPORTS
-class ReportListView(ListView):
+class ReportListView(LoginRequiredMixin, ListView):
     model = Report
     template_name = 'main_app/report_list.html'
     context_object_name = 'reports'
@@ -34,7 +43,7 @@ class ReportListView(ListView):
 
 
 # DETAIL
-class ReportDetailView(DetailView):
+class ReportDetailView(LoginRequiredMixin, DetailView):
     model = Report
     template_name = 'main_app/detail_report.html'
 
@@ -45,7 +54,7 @@ class ReportDetailView(DetailView):
 
 
 # CREATE
-class ReportCreateView(CreateView):
+class ReportCreateView(AdminRequiredMixin, LoginRequiredMixin, CreateView):
     model = Report
     fields = ['title', 'category', 'description', 'location']
     template_name = 'main_app/add_report.html'
@@ -57,7 +66,7 @@ class ReportCreateView(CreateView):
 
 
 # UPDATE
-class ReportUpdateView(UpdateView):
+class ReportUpdateView(AdminRequiredMixin, LoginRequiredMixin, UpdateView):
     model = Report
     fields = ['title', 'category', 'description', 'location']
     template_name = 'main_app/edit_report.html'
@@ -69,7 +78,7 @@ class ReportUpdateView(UpdateView):
 
 
 # DELETE
-class ReportDeleteView(DeleteView):
+class ReportDeleteView(AdminRequiredMixin, LoginRequiredMixin, DeleteView):
     model = Report
     template_name = 'main_app/delete_report.html'
     success_url = reverse_lazy('report_list')
@@ -80,7 +89,7 @@ class ReportDeleteView(DeleteView):
 
 
 # UPDATE STATUS (WORKFLOW)
-class ReportUpdateStatusView(View):
+class ReportUpdateStatusView(AdminRequiredMixin, LoginRequiredMixin, View):
     def post(self, request, pk):
         report = get_object_or_404(Report, pk=pk)
         new_status = request.POST.get('status')
@@ -88,3 +97,4 @@ class ReportUpdateStatusView(View):
         report.save()
         messages.success(self.request, f'Status laporan berhasil diubah menjadi {report.get_status_display()}!')
         return redirect('report_list')
+

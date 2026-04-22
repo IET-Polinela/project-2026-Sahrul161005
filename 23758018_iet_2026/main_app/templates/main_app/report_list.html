@@ -8,9 +8,13 @@
     <a href="/" class="btn btn-secondary">
         <i class="bi bi-house"></i> Kembali ke Home
     </a>
+
+    <!-- 🔥 TAMBAHAN -->
+    {% if user.is_admin %}
     <a href="/add/" class="btn btn-primary ms-2">
         <i class="bi bi-plus-circle"></i> Tambah Laporan
     </a>
+    {% endif %}
 </div>
 
 {% if reports %}
@@ -51,11 +55,22 @@
 
         <!-- AKSI -->
         <td>
+
+            <!-- SEMUA USER -->
             <a href="/detail/{{ report.id }}/" class="btn btn-sm btn-info">Detail</a>
-            <a href="/edit/{{ report.id }}/" class="btn btn-sm btn-warning" data-confirm="Yakin ingin mengedit laporan ini?">Edit</a>
+
+            <!-- 🔥 ADMIN ONLY -->
+            {% if user.is_admin %}
+
+            <a href="/edit/{{ report.id }}/" class="btn btn-sm btn-warning">
+                Edit
+            </a>
+
             <form method="POST" action="/delete/{{ report.id }}/" class="d-inline">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-sm btn-danger" data-confirm="Yakin ingin menghapus laporan ini?">Delete</button>
+                <button type="submit" class="btn btn-sm btn-danger">
+                    Delete
+                </button>
             </form>
 
             <!-- WORKFLOW -->
@@ -63,22 +78,24 @@
             <form method="POST" action="/update-status/{{ report.id }}/" class="d-inline">
                 {% csrf_token %}
                 <input type="hidden" name="status" value="VERIFIED">
-                <button type="submit" class="btn btn-sm btn-secondary" data-confirm="Yakin ingin memverifikasi laporan ini?">Verify</button>
+                <button class="btn btn-sm btn-secondary">Verify</button>
             </form>
 
             {% elif report.status == "VERIFIED" %}
             <form method="POST" action="/update-status/{{ report.id }}/" class="d-inline">
                 {% csrf_token %}
                 <input type="hidden" name="status" value="IN_PROGRESS">
-                <button type="submit" class="btn btn-sm btn-primary" data-confirm="Yakin ingin memproses laporan ini menjadi In Progress?">Process</button>
+                <button class="btn btn-sm btn-primary">Process</button>
             </form>
 
             {% elif report.status == "IN_PROGRESS" %}
             <form method="POST" action="/update-status/{{ report.id }}/" class="d-inline">
                 {% csrf_token %}
                 <input type="hidden" name="status" value="RESOLVED">
-                <button type="submit" class="btn btn-sm btn-success" data-confirm="Yakin ingin menyelesaikan laporan ini?">Resolve</button>
+                <button class="btn btn-sm btn-success">Resolve</button>
             </form>
+            {% endif %}
+
             {% endif %}
 
         </td>
@@ -94,8 +111,11 @@
 
 <div class="alert alert-info">
     Belum ada laporan.
+
+    {% if user.is_admin %}
     <br><br>
     <a href="/add/" class="btn btn-primary">Tambah Laporan</a>
+    {% endif %}
 </div>
 
 {% endif %}

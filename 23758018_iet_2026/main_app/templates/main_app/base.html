@@ -166,25 +166,59 @@
         </button>
 
         <div class="collapse navbar-collapse" id="nav">
-            <ul class="navbar-nav ms-auto align-items-center">
-                <li class="nav-item">
-                    <a class="nav-link" href="/">Home</a>
-                </li>
+            <!-- BAGIAN NAVBAR SAJA YANG DIUBAH -->
 
-                <li class="nav-item">
-                    <a class="nav-link" href="/about/">About</a>
-                </li>
+<ul class="navbar-nav ms-auto align-items-center">
 
-                <li class="nav-item">
-                    <a class="nav-link" href="/contacts/">Contact</a>
-                </li>
+    {% if user.is_authenticated %}
 
-                <li class="nav-item ms-2">
-                    <a href="/add/" class="btn btn-primary">
-                        <i class="bi bi-plus-circle"></i> Report
-                    </a>
-                </li>
-            </ul>
+        <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="/about/">About</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="/contacts/">Contact</a>
+        </li>
+
+        <!-- 🔥 TAMBAHAN INI SAJA -->
+        {% if user.is_admin %}
+        <li class="nav-item ms-2">
+            <a href="/add/" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Report
+            </a>
+        </li>
+        {% endif %}
+
+        <li class="nav-item ms-3">
+            <span class="nav-link text-white">
+                <i class="bi bi-person-circle"></i> {{ user.username }}
+            </span>
+        </li>
+
+        <li class="nav-item ms-2">
+            <form action="/logout/" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-danger btn-sm">
+                    Logout
+                </button>
+            </form>
+        </li>
+
+    {% else %}
+
+        <li class="nav-item">
+            <a href="/login/" class="btn btn-light">
+                Login
+            </a>
+        </li>
+
+    {% endif %}
+
+</ul>
         </div>
     </div>
 </nav>

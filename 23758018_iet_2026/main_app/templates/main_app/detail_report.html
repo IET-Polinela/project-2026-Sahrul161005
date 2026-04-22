@@ -36,11 +36,27 @@
 
 <!-- ACTION BUTTON -->
 <a href="/" class="btn btn-secondary">⬅ Kembali</a>
-<a href="/edit/{{ object.id }}/" class="btn btn-warning" data-confirm="Yakin ingin mengedit laporan ini?">✏ Edit</a>
 
-<form method="POST" action="/delete/{{ object.id }}/" class="d-inline">
+<!-- 🔥 ADMIN ONLY -->
+{% if user.is_admin %}
+
+<a href="/edit/{{ object.id }}/"
+   class="btn btn-warning"
+   data-confirm="Yakin ingin mengedit laporan ini?">
+   ✏ Edit
+</a>
+
+<form method="POST"
+      action="/delete/{{ object.id }}/"
+      class="d-inline">
     {% csrf_token %}
-    <button type="submit" class="btn btn-danger" data-confirm="Yakin ingin menghapus laporan ini?">🗑 Delete</button>
+    <button type="submit"
+            class="btn btn-danger"
+            data-confirm="Yakin ingin menghapus laporan ini?">
+        🗑 Delete
+    </button>
 </form>
+
+{% endif %}
 
 {% endblock %}

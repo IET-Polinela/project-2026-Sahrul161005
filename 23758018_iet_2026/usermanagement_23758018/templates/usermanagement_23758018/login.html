@@ -8,40 +8,74 @@
         
         <div class="card shadow-lg border-0">
             
+            <!-- HEADER -->
             <div class="card-header bg-primary text-white text-center">
                 <h4 class="mb-0">
                     <i class="bi bi-person-circle"></i> Login CivicTrack
                 </h4>
             </div>
 
+            <!-- BODY -->
             <div class="card-body p-4">
 
                 <form method="POST">
                     {% csrf_token %}
 
-                    <!-- Username -->
+                    <!-- ERROR GLOBAL -->
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {% for error in form.non_field_errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <!-- USERNAME -->
                     <div class="mb-3">
                         <label class="form-label">Username</label>
                         <div class="input-group">
                             <span class="input-group-text">
                                 <i class="bi bi-person"></i>
                             </span>
-                            {{ form.username }}
+                            <input 
+                                type="text" 
+                                name="username" 
+                                class="form-control {% if form.username.errors %}is-invalid{% endif %}"
+                                value="{{ form.username.value|default:'' }}"
+                                placeholder="Masukkan username"
+                            >
                         </div>
+
+                        {% for error in form.username.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
                     </div>
 
-                    <!-- Password -->
+                    <!-- PASSWORD -->
                     <div class="mb-3">
                         <label class="form-label">Password</label>
                         <div class="input-group">
                             <span class="input-group-text">
                                 <i class="bi bi-lock"></i>
                             </span>
-                            {{ form.password }}
+                            <input 
+                                type="password" 
+                                name="password" 
+                                class="form-control {% if form.password.errors %}is-invalid{% endif %}"
+                                placeholder="Masukkan password"
+                            >
                         </div>
+
+                        {% for error in form.password.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
                     </div>
 
-                    <!-- Button -->
+                    <!-- BUTTON -->
                     <div class="d-grid">
                         <button class="btn btn-primary">
                             <i class="bi bi-box-arrow-in-right"></i> Login
@@ -52,8 +86,10 @@
 
             </div>
 
-            <div class="card-footer text-center text-muted">
-                Smart City Issue Reporting 🚀
+            <!-- FOOTER -->
+            <div class="card-footer text-center">
+                Belum punya akun? 
+                <a href="/register/" class="text-primary fw-bold">Register</a>
             </div>
 
         </div>

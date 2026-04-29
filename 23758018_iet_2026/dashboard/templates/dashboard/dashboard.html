@@ -1,0 +1,177 @@
+{% extends "main_app/base.html" %}
+
+{% block content %}
+
+<h2 class="mb-4 fw-bold text-primary">
+    📊 Dashboard Statistik
+</h2>
+
+<div class="row">
+
+    <!-- STATUS CHART -->
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-primary text-white">
+                Distribusi Status Laporan
+            </div>
+            <div class="card-body text-center">
+
+                <!-- 🔥 FIX SIZE -->
+                <div style="max-width: 350px; height: 350px; margin:auto;">
+                    <canvas id="statusChart"></canvas>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- CATEGORY CHART -->
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-success text-white">
+                Distribusi Kategori
+            </div>
+            <div class="card-body">
+                <canvas id="categoryChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<hr class="my-4">
+
+<h4 class="mb-3">📌 Laporan Terbaru</h4>
+
+<div class="row">
+
+    <!-- REPORTED -->
+    <div class="col-md-6 mb-3">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-danger text-white">
+                🔴 REPORTED
+            </div>
+            <ul class="list-group list-group-flush" id="reportedList">
+                <li class="list-group-item text-muted">Loading...</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- RESOLVED -->
+    <div class="col-md-6 mb-3">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-success text-white">
+                🟢 RESOLVED
+            </div>
+            <ul class="list-group list-group-flush" id="resolvedList">
+                <li class="list-group-item text-muted">Loading...</li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<!-- CHART JS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+// STATUS CHART (🔥 SUDAH DIPERBAIKI)
+fetch('/dashboard/api/status/')
+.then(res => res.json())
+.then(data => {
+
+    const labels = data.map(d => d.status)
+    const values = data.map(d => d.total)
+
+    new Chart(document.getElementById('statusChart'), {
+        type: 'doughnut', // 🔥 lebih modern dari pie
+        data: {
+            labels: labels,
+            datasets: [{
+                data: values,
+                backgroundColor: [
+                    '#dc3545', // red
+                    '#ffc107', // yellow
+                    '#0d6efd', // blue
+                    '#198754'  // green
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false, // 🔥 penting biar tidak gede
+            layout: {
+                padding: 20
+            },
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        boxWidth: 15,
+                        padding: 15
+                    }
+                }
+            }
+        }
+    })
+})
+
+
+// CATEGORY CHART
+fetch('/dashboard/api/category/')
+.then(res => res.json())
+.then(data => {
+
+    const labels = data.map(d => d.category)
+    const values = data.map(d => d.total)
+
+    new Chart(document.getElementById('categoryChart'), {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Jumlah Laporan',
+                data: values,
+                backgroundColor: '#185FD6'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    })
+})
+
+
+// RECENT DATA
+fetch('/dashboard/api/recent/')
+.then(res => res.json())
+.then(data => {
+
+    let reportedHTML = ''
+    let resolvedHTML = ''
+
+    data.reported.forEach(r => {
+        reportedHTML += `<li class="list-group-item">${r.title}</li>`
+    })
+
+    data.resolved.forEach(r => {
+        resolvedHTML += `<li class="list-group-item">${r.title}</li>`
+    })
+
+    document.getElementById('reportedList').innerHTML =
+        reportedHTML || `<li class="list-group-item text-muted">Tidak ada data</li>`
+
+    document.getElementById('resolvedList').innerHTML =
+        resolvedHTML || `<li class="list-group-item text-muted">Tidak ada data</li>`
+
+})
+
+</script>
+
+{% endblock %}

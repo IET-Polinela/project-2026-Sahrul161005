@@ -5,7 +5,45 @@
 <h2 class="mb-4 fw-bold text-primary">
     📊 Dashboard Statistik
 </h2>
+<div class="row text-center mb-4">
 
+    <div class="col-md-3">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h3 class="text-primary">{{ reports|length|default:0 }}</h3>
+                <p class="text-muted mb-0">Total Laporan</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h3 class="text-warning">{{ in_progress|default:0 }}</h3>
+                <p class="text-muted mb-0">Dalam Proses</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h3 class="text-success">{{ resolved|default:0 }}</h3>
+                <p class="text-muted mb-0">Selesai</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h3 class="text-info">{{ active|default:0 }}</h3>
+                <p class="text-muted mb-0">Aktif</p>
+            </div>
+        </div>
+    </div>
+
+</div>
 <div class="row">
 
     <!-- STATUS CHART -->

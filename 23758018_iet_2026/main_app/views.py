@@ -8,7 +8,7 @@ from django.contrib import messages
 from .models import Report
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
-
+from django.core.paginator import Paginator
 
 class AdminRequiredMixin:
     def dispatch(self, request, *args, **kwargs):
@@ -35,6 +35,7 @@ class ReportListView(LoginRequiredMixin, ListView):
     model = Report
     template_name = 'main_app/report_list.html'
     context_object_name = 'reports'
+    paginate_by = 10   # 🔥 INI YANG PENTING
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -101,18 +102,27 @@ class ReportUpdateStatusView(AdminRequiredMixin, LoginRequiredMixin, View):
 class SearchReport(View):
     def get(self, request):
         query = request.GET.get('q', '')
+        page = request.GET.get('page', 1)
 
-        reports = Report.objects.filter(title__icontains=query)
+        reports = Report.objects.filter(title__icontains=query).order_by('-id')
 
-        data = list(reports.values(
+        paginator = Paginator(reports, 10)  # 🔥 10 data per page
+        page_obj = paginator.get_page(page)
+
+        data = list(page_obj.object_list.values(
             'id',
             'title',
             'category',
-            'location',   # 🔥 TAMBAH INI
-            'status'      # 🔥 TAMBAH INI
+            'location',
+            'status'
         ))
 
-        return JsonResponse(data, safe=False)
+        return JsonResponse({
+            'data': data,
+            'has_next': page_obj.has_next(),
+            'has_prev': page_obj.has_previous(),
+            'current_page': page_obj.number
+        })
     
 class ReportDetailAPI(View):
     def get(self, request, pk):

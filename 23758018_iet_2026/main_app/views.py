@@ -1,5 +1,5 @@
 from multiprocessing import context
-
+from django.http import JsonResponse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from django.views import View
 from django.urls import reverse_lazy
@@ -98,3 +98,31 @@ class ReportUpdateStatusView(AdminRequiredMixin, LoginRequiredMixin, View):
         messages.success(self.request, f'Status laporan berhasil diubah menjadi {report.get_status_display()}!')
         return redirect('report_list')
 
+class SearchReport(View):
+    def get(self, request):
+        query = request.GET.get('q', '')
+
+        reports = Report.objects.filter(title__icontains=query)
+
+        data = list(reports.values(
+            'id',
+            'title',
+            'category',
+            'location',   # 🔥 TAMBAH INI
+            'status'      # 🔥 TAMBAH INI
+        ))
+
+        return JsonResponse(data, safe=False)
+    
+class ReportDetailAPI(View):
+    def get(self, request, pk):
+        report = Report.objects.get(pk=pk)
+
+        data = {
+            'title': report.title,
+            'description': report.description,
+            'location': report.location,
+            'status': report.status
+        }
+
+        return JsonResponse(data)

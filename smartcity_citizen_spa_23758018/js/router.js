@@ -1,8 +1,15 @@
 function renderPage() {
 
-    const app = document.getElementById("app-content");
+    const app =
+        document.getElementById(
+            "app-content"
+        );
 
-    let route = window.location.hash.replace("#", "");
+    let route =
+        window.location.hash.replace(
+            "#",
+            ""
+        );
 
     if (!route) {
         route = "login";
@@ -12,14 +19,54 @@ function renderPage() {
         route = "login";
     }
 
-    app.innerHTML = pages[route];
+    app.innerHTML =
+        pages[route];
 
+    // Login Page
     if (route === "login") {
-        if (typeof setupLoginForm === "function") {
+
+        if (
+            typeof setupLoginForm ===
+            "function"
+        ) {
+
             setupLoginForm();
+
         }
+
     }
+
+    // Dashboard Page
+    if (route === "dashboard") {
+
+        if (
+            typeof setupReportModal ===
+            "function"
+        ) {
+
+            setupReportModal();
+
+        }
+
+        if (
+            typeof loadStatistics ===
+            "function"
+        ) {
+
+            loadStatistics();
+
+        }
+
+    }
+
 }
 
-window.addEventListener("hashchange", renderPage);
-window.addEventListener("load", renderPage);
+window.addEventListener(
+    "hashchange",
+    renderPage
+);
+
+window.addEventListener(
+    "load",
+    renderPage
+);

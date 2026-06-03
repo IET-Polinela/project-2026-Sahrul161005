@@ -1,24 +1,35 @@
 const API_BASE_URL = "http://127.0.0.1:8000";
 
-async function requestAPI(endpoint, method = "GET", bodyData = null) {
+async function requestAPI(
+    endpoint,
+    method = "GET",
+    bodyData = null
+) {
 
-    const token = localStorage.getItem("access_token");
+    const token =
+        localStorage.getItem("access_token");
 
     const headers = {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
     };
 
     if (token) {
-        headers["Authorization"] = `Bearer ${token}`;
+
+        headers["Authorization"] =
+            `Bearer ${token}`;
+
     }
 
     const config = {
-        method: method,
-        headers: headers,
+        method,
+        headers
     };
 
     if (bodyData) {
-        config.body = JSON.stringify(bodyData);
+
+        config.body =
+            JSON.stringify(bodyData);
+
     }
 
     const response = await fetch(
@@ -26,10 +37,26 @@ async function requestAPI(endpoint, method = "GET", bodyData = null) {
         config
     );
 
-    const data = await response.json();
+    let data = null;
+
+    try {
+
+        const text = await response.text();
+
+        if (text) {
+
+            data = JSON.parse(text);
+
+        }
+
+    } catch (error) {
+
+        data = null;
+
+    }
 
     return {
         status: response.status,
-        data: data
+        data
     };
 }

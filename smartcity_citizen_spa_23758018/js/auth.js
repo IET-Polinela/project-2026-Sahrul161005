@@ -47,3 +47,20 @@ function setupLoginForm() {
 
     });
 }
+
+function logout() {
+
+    localStorage.removeItem(
+        "access_token"
+    );
+
+    localStorage.removeItem(
+        "refresh_token"
+    );
+
+    alert("Logout berhasil!");
+
+    window.location.hash =
+        "#login";
+
+}

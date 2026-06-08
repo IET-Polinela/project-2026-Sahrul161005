@@ -15,6 +15,23 @@ function renderPage() {
         route = "login";
     }
 
+    const token =
+        localStorage.getItem(
+            "access_token"
+        );
+
+    if (
+        route === "dashboard" &&
+        !token
+    ) {
+
+        window.location.hash =
+            "#login";
+
+        return;
+
+    }
+
     if (!pages[route]) {
         route = "login";
     }

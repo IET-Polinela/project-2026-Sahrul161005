@@ -1,4 +1,6 @@
 let editingReportId = null;
+let currentPage = 1;
+let currentTab = "my_reports";
 const pages = {
 
     login: `
@@ -54,131 +56,243 @@ const pages = {
         <div class="row g-3">
 
             <div class="col-12 col-lg-3">
-                <div class="card shadow-sm border-0 h-100">
-                    <div class="card-body">
-                        <h5 class="fw-bold mb-3">
-                            <i class="bi bi-person-fill me-2"></i>
-                            Citizen Menu
-                        </h5>
 
-                        <div class="d-grid gap-2">
-                            <button id="btnOpenReportModal"
-                                class="btn btn-outline-primary text-start">
-                                <i class="bi bi-plus-circle me-2"></i>Buat Laporan
-                            </button>
-                            <button id="btnMyReports"
-                                class="btn btn-outline-secondary w-100">
-                                <i class="bi bi-card-list"></i>Riwayat Laporan
-                            </button>
-                            <button id="btnFeed"
-                                class="btn btn-outline-info w-100">
-                                <i class="bi bi-globe"></i> Feed Publik
-                            </button>
-                            <button class="btn btn-outline-danger text-start">
-                                <i class="bi bi-box-arrow-right me-2"></i>Logout
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="card shadow-sm border-0">
 
-            <div class="col-12 col-lg-6">
-                <div class="card shadow-sm border-0 mb-3">
-                    <div class="card-body p-4">
-                        <div class="d-flex align-items-center justify-content-between mb-3">
-                            <div>
-                                <h3 class="fw-bold mb-1">Dashboard</h3>
-                                <p class="text-muted mb-0">Selamat datang di Smart City Citizen Portal.</p>
-                            </div>
-                            <i class="bi bi-buildings-fill fs-1 text-primary"></i>
-                        </div>
+        <div class="card-body">
 
-                        <div class="alert alert-primary mb-0">
-                            Portal ini digunakan untuk mengirim laporan warga secara online.
-                        </div>
-                        <div id="report-list-container" class="mt-3"></div>
-                    </div>
-                </div>
+            <button
+                id="btnOpenReportModal"
+                class="btn btn-primary w-100 py-3 fw-bold mb-4">
 
-                <div class="row g-3">
+                <i class="bi bi-plus-circle me-2"></i>
+                Buat Laporan Baru
 
-    <div class="col-12 col-md-4">
-        <div class="card shadow-sm border-0 h-100 text-center">
-            <div class="card-body">
+            </button>
 
-                <i class="bi bi-file-earmark-text fs-1 text-primary"></i>
+            <h6 class="fw-bold text-uppercase mb-3">
+                <i class="bi bi-activity me-2"></i>
+                Status Laporan Anda
+            </h6>
 
-                <h5
-                    id="totalReports"
-                    class="fw-bold mt-2 mb-1">
-                    0
-                </h5>
-
-                <small class="text-muted">
-                    Total Laporan
-                </small>
-
-            </div>
-        </div>
-    </div>
-
-    <div class="col-12 col-md-4">
-        <div class="card shadow-sm border-0 h-100 text-center">
-            <div class="card-body">
-
-                <i class="bi bi-hourglass-split fs-1 text-warning"></i>
-
-                <h5
-                    id="reportedReports"
-                    class="fw-bold mt-2 mb-1">
-                    0
-                </h5>
-
-                <small class="text-muted">
-                    Reported
-                </small>
-
-            </div>
-        </div>
-    </div>
-
-    <div class="col-12 col-md-4">
-        <div class="card shadow-sm border-0 h-100 text-center">
-            <div class="card-body">
-
-                <i class="bi bi-check-circle-fill fs-1 text-success"></i>
-
-                <h5
-                    id="draftReports"
-                    class="fw-bold mt-2 mb-1">
-                    0
-                </h5>
-
-                <small class="text-muted">
+            <div class="d-flex justify-content-between border-bottom py-2">
+                <span>
+                    <i class="bi bi-pencil-square me-2"></i>
                     Draft
-                </small>
+                </span>
 
+                <span
+                    id="sidebarDraft"
+                    class="badge bg-secondary">
+                    0
+                </span>
             </div>
+
+            <div class="d-flex justify-content-between border-bottom py-2">
+                <span>
+                    <i class="bi bi-send me-2 text-warning"></i>
+                    Diajukan
+                </span>
+
+                <span
+                    id="sidebarReported"
+                    class="badge bg-warning text-dark">
+                    0
+                </span>
+            </div>
+
+            <div class="d-flex justify-content-between border-bottom py-2">
+                <span>
+                    <i class="bi bi-patch-check-fill me-2 text-info"></i>
+                    Diverifikasi
+                </span>
+
+                <span
+                    id="sidebarVerified"
+                    class="badge bg-info">
+                    0
+                </span>
+            </div>
+
+            <div class="d-flex justify-content-between border-bottom py-2">
+                <span>
+                    <i class="bi bi-gear-fill me-2 text-primary"></i>
+                    Diproses
+                </span>
+
+                <span
+                    id="sidebarProgress"
+                    class="badge bg-primary">
+                    0
+                </span>
+            </div>
+
+            <div class="d-flex justify-content-between py-2">
+                <span>
+                    <i class="bi bi-check-circle-fill me-2 text-success"></i>
+                    Selesai
+                </span>
+
+                <span
+                    id="sidebarResolved"
+                    class="badge bg-success">
+                    0
+                </span>
+            </div>
+
+            <hr>
+
+            <button
+    id="btnLogout"
+    class="btn btn-outline-danger w-100">
+
+    <i class="bi bi-box-arrow-right me-2"></i>
+    Logout
+
+</button>
         </div>
+
     </div>
 
 </div>
 
-            <div class="col-12 col-lg-3">
-                <div class="card shadow-sm border-0 h-100">
-                    <div class="card-body">
-                        <h5 class="fw-bold mb-3">
-                            <i class="bi bi-bell-fill me-2"></i>
-                            Informasi
-                        </h5>
-                        <div class="small text-muted">
-                            <p class="mb-2">• Gunakan menu untuk membuat laporan baru.</p>
-                            <p class="mb-2">• Cek status laporan secara berkala.</p>
-                            <p class="mb-0">• Login tetap tersimpan selama token masih aktif.</p>
-                        </div>
-                    </div>
+            <div class="col-12 col-lg-7">
+
+    <div class="card shadow-sm border-0">
+
+        <div class="card-body">
+
+            <ul class="nav nav-tabs mb-4">
+
+                <li class="nav-item">
+
+                    <button
+    class="nav-link active"
+    id="btnMyReportsTab">
+
+                        <i class="bi bi-folder-fill me-2"></i>
+                        Laporan Saya
+
+                    </button>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <button
+    class="nav-link"
+    id="btnFeedTab">
+
+                        <i class="bi bi-globe-americas me-2"></i>
+                        Feed Kota (Publik)
+
+                    </button>
+
+                </li>
+
+            </ul>
+
+            <div id="report-list-container">
+
+                <div class="alert alert-primary">
+
+                    Pilih menu
+                    <strong>Laporan Saya</strong>
+                    atau
+                    <strong>Feed Kota</strong>
+
                 </div>
+
             </div>
+
+        </div>
+
+    </div>
+
+    <div class="row g-3 mt-1">
+
+        <div class="col-12 col-md-4">
+
+            <div class="card shadow-sm border-0 text-center h-100">
+
+                <div class="card-body">
+
+                    <i class="bi bi-file-earmark-text fs-1 text-primary"></i>
+
+                    <h4
+                        id="totalReports"
+                        class="fw-bold mt-2">
+
+                        0
+
+                    </h4>
+
+                    <small class="text-muted">
+                        Total Laporan
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-12 col-md-4">
+
+            <div class="card shadow-sm border-0 text-center h-100">
+
+                <div class="card-body">
+
+                    <i class="bi bi-hourglass-split fs-1 text-warning"></i>
+
+                    <h4
+                        id="reportedReports"
+                        class="fw-bold mt-2">
+
+                        0
+
+                    </h4>
+
+                    <small class="text-muted">
+                        Diajukan
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-12 col-md-4">
+
+            <div class="card shadow-sm border-0 text-center h-100">
+
+                <div class="card-body">
+
+                    <i class="bi bi-check-circle-fill fs-1 text-success"></i>
+
+                    <h4
+                        id="draftReports"
+                        class="fw-bold mt-2">
+
+                        0
+
+                    </h4>
+
+                    <small class="text-muted">
+                        Draft
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
 
         </div>
     `
@@ -191,72 +305,109 @@ function setupReportModal() {
             "btnOpenReportModal"
         );
 
-    if (!btn) return;
+    if (btn) {
 
-    btn.addEventListener("click", () => {
+        btn.addEventListener("click", () => {
 
-        const modal =
-            new bootstrap.Modal(
+            const modal =
+                new bootstrap.Modal(
+                    document.getElementById(
+                        "reportModal"
+                    )
+                );
+
+            modal.show();
+
+            const btnDraft =
                 document.getElementById(
-                    "reportModal"
-                )
-            );
+                    "btnDraft"
+                );
 
-        modal.show();
+            if (btnDraft) {
 
-        // Tombol Draft
-        const btnDraft =
-            document.getElementById("btnDraft");
+                btnDraft.onclick =
+                    function () {
 
-        if (btnDraft) {
+                        createDraftReport();
 
-            btnDraft.onclick = function () {
-                createDraftReport();
-            };
+                    };
 
-        }
+            }
 
-        // Tombol Ajukan
-        const btnSubmit =
-            document.getElementById(
-                "btnSubmitReport"
-            );
+            const btnSubmit =
+                document.getElementById(
+                    "btnSubmitReport"
+                );
 
-        if (btnSubmit) {
+            if (btnSubmit) {
 
-            btnSubmit.onclick = function () {
-                submitReport();
-            };
+                btnSubmit.onclick =
+                    function () {
 
-        }
+                        submitReport();
 
-    });
+                    };
 
-    // Riwayat Laporan
-    const btnMyReports =
-        document.getElementById(
-            "btnMyReports"
-        );
+            }
 
-    if (btnMyReports) {
-
-        btnMyReports.onclick = function () {
-            loadMyReports();
-        };
+        });
 
     }
 
-    // Feed Publik
-    const btnFeed =
+// Tab Laporan Saya
+const btnMyReportsTab =
+    document.getElementById(
+        "btnMyReportsTab"
+    );
+
+if (btnMyReportsTab) {
+
+    btnMyReportsTab.onclick =
+        function () {
+
+            currentTab = "my_reports";
+            currentPage = 1;
+
+            loadMyReports();
+
+        };
+
+}
+
+// Tab Feed Publik
+const btnFeedTab =
+    document.getElementById(
+        "btnFeedTab"
+    );
+
+if (btnFeedTab) {
+
+    btnFeedTab.onclick =
+        function () {
+
+            currentTab = "feed";
+            currentPage = 1;
+
+            loadFeed();
+
+        };
+
+}
+
+    // Logout
+    const btnLogout =
         document.getElementById(
-            "btnFeed"
+            "btnLogout"
         );
 
-    if (btnFeed) {
+    if (btnLogout) {
 
-        btnFeed.onclick = function () {
-            loadFeed();
-        };
+        btnLogout.onclick =
+            function () {
+
+                logout();
+
+            };
 
     }
 
@@ -436,10 +587,8 @@ async function loadMyReports() {
     try {
 
         const response = await requestAPI(
-            "/api/reports/?tab=my_reports"
+            `/api/reports/?tab=my_reports&page=${currentPage}`
         );
-
-        console.log(response);
 
         const container =
             document.getElementById(
@@ -449,80 +598,186 @@ async function loadMyReports() {
         if (!container) return;
 
         let html = `
-            <div class="card shadow-sm border-0">
-                <div class="card-body">
+            <h3 class="fw-bold mb-4">
+                Riwayat Laporan Saya
+            </h3>
 
-                    <h5 class="fw-bold mb-3">
-                        Riwayat Laporan Saya
-                    </h5>
+            <div class="row g-3">
         `;
 
         response.data.results.forEach(report => {
 
             let badgeColor = "secondary";
+            let progressBarColor = "secondary";
+            let progress = 25;
 
             if (report.status === "DRAFT") {
-                badgeColor = "warning";
+                badgeColor = "secondary";
+                progressBarColor = "secondary";
+                progress = 10;
             }
 
             if (report.status === "REPORTED") {
-                badgeColor = "primary";
+                badgeColor = "warning";
+                progressBarColor = "warning";
+                progress = 25;
             }
 
             if (report.status === "VERIFIED") {
+                badgeColor = "info";
+                progressBarColor = "info";
+                progress = 50;
+            }
+
+            if (report.status === "IN_PROGRESS") {
+                badgeColor = "primary";
+                progressBarColor = "primary";
+                progress = 75;
+            }
+
+            if (report.status === "RESOLVED") {
                 badgeColor = "success";
+                progressBarColor = "success";
+                progress = 100;
             }
 
             html += `
-                <div class="border rounded p-3 mb-3">
 
-                    <h6 class="fw-bold">
-                        ${report.title}
-                    </h6>
+            <div class="col-12 col-lg-6">
 
-                    <p class="mb-2">
-                        ${report.description}
-                    </p>
+                <div class="card shadow-sm border-0 h-100">
 
-                    <span class="badge bg-${badgeColor}">
-                        ${report.status}
-                    </span>
+                    <div class="card-body">
 
-                    ${
-                        report.status === "DRAFT"
-                        ?
-                        `
-                        <div class="mt-3">
+                        <div class="d-flex justify-content-between">
 
-                            <button
-                                class="btn btn-sm btn-warning me-2"
-                                onclick="editReport(${report.id})">
+                            <span class="badge bg-${badgeColor}">
+                                ${report.status}
+                            </span>
 
-                                Edit
-
-                            </button>
-
-                            <button
-                                class="btn btn-sm btn-danger"
-                                onclick="deleteReport(${report.id})">
-
-                                Hapus
-
-                            </button>
+                            <small class="text-muted">
+                                ${report.category}
+                            </small>
 
                         </div>
-                        `
-                        :
-                        ""
-                    }
+
+                        <h4 class="fw-bold mt-3">
+                            ${report.title}
+                        </h4>
+
+                        <p class="text-muted">
+                            ${report.description}
+                        </p>
+
+                        <hr>
+
+                        <div>
+                            <strong>Lokasi:</strong>
+                            ${report.location}
+                        </div>
+
+                        <div>
+                            <strong>Oleh:</strong>
+                            ${report.reporter}
+                        </div>
+
+                        <div class="mt-3">
+
+                            <small class="fw-bold">
+                                Progress Laporan
+                            </small>
+
+                            <div class="progress mt-2">
+
+                                <div
+                                    class="progress-bar bg-${progressBarColor}"
+                                    style="width:${progress}%">
+                                </div>
+
+                            </div>
+
+                            <div class="text-end mt-1">
+
+                                <small
+                                    class="text-primary fw-bold">
+
+                                    ${report.status}
+                                    (${progress}%)
+
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                        ${
+                            report.status === "DRAFT"
+                            ?
+                            `
+                            <div class="mt-3">
+
+                                <button
+                                    class="btn btn-warning btn-sm me-2"
+                                    onclick="editReport(${report.id})">
+
+                                    Edit
+
+                                </button>
+
+                                <button
+                                    class="btn btn-danger btn-sm"
+                                    onclick="deleteReport(${report.id})">
+
+                                    Hapus
+
+                                </button>
+
+                            </div>
+                            `
+                            :
+                            ""
+                        }
+
+                    </div>
 
                 </div>
+
+            </div>
             `;
 
         });
 
         html += `
-                </div>
+            </div>
+
+            <div class="d-flex justify-content-center align-items-center py-4">
+
+                <button
+                    class="btn btn-outline-secondary me-3"
+                    onclick="prevPage()"
+                    ${!response.data.previous ? "disabled" : ""}>
+
+                    <i class="bi bi-chevron-left"></i>
+                    Previous
+
+                </button>
+
+                <span class="badge bg-primary fs-6">
+
+                    Halaman ${currentPage}
+
+                </span>
+
+                <button
+                    class="btn btn-outline-primary ms-3"
+                    onclick="nextPage()"
+                    ${!response.data.next ? "disabled" : ""}>
+
+                    Next
+                    <i class="bi bi-chevron-right"></i>
+
+                </button>
+
             </div>
         `;
 
@@ -652,7 +907,7 @@ async function loadFeed() {
     try {
 
         const response = await requestAPI(
-            "/api/reports/?tab=feed"
+            `/api/reports/?tab=feed&page=${currentPage}`
         );
 
         const container =
@@ -663,52 +918,150 @@ async function loadFeed() {
         if (!container) return;
 
         let html = `
-            <div class="card shadow-sm border-0">
-                <div class="card-body">
+            <h3 class="fw-bold mb-4">
+                Feed Kota (Publik)
+            </h3>
 
-                    <h5 class="fw-bold mb-3">
-                        Feed Laporan Publik
-                    </h5>
+            <div class="row g-3">
         `;
 
         response.data.results.forEach(report => {
 
-            let badgeColor = "secondary";
+            let badgeColor = "warning";
+            let progressBarColor = "warning";
+            let progress = 25;
 
-            if (report.status === "REPORTED")
-                badgeColor = "primary";
-
-            if (report.status === "VERIFIED")
-                badgeColor = "success";
-
-            if (report.status === "IN_PROGRESS")
+            if (report.status === "VERIFIED") {
                 badgeColor = "info";
+                progressBarColor = "info";
+                progress = 50;
+            }
 
-            if (report.status === "RESOLVED")
-                badgeColor = "dark";
+            if (report.status === "IN_PROGRESS") {
+                badgeColor = "primary";
+                progressBarColor = "primary";
+                progress = 75;
+            }
+
+            if (report.status === "RESOLVED") {
+                badgeColor = "success";
+                progressBarColor = "success";
+                progress = 100;
+            }
 
             html += `
-                <div class="border rounded p-3 mb-3">
 
-                    <h6 class="fw-bold">
-                        ${report.title}
-                    </h6>
+            <div class="col-12 col-lg-6">
 
-                    <p class="mb-2">
-                        ${report.description}
-                    </p>
+                <div class="card shadow-sm border-0 h-100">
 
-                    <span class="badge bg-${badgeColor}">
-                        ${report.status}
-                    </span>
+                    <div class="card-body p-3">
+
+                        <div class="d-flex justify-content-between align-items-center">
+
+                            <span class="badge bg-${badgeColor}">
+                                ${report.status}
+                            </span>
+
+                            <small class="text-muted">
+                                ${report.category}
+                            </small>
+
+                        </div>
+
+                        <h5 class="fw-bold mt-2 mb-2">
+                            ${report.title}
+                        </h5>
+
+                        <p class="text-muted small mb-2">
+
+                            ${
+                                report.description.length > 60
+                                ? report.description.substring(0, 60) + "..."
+                                : report.description
+                            }
+
+                        </p>
+
+                        <hr class="my-2">
+
+                        <div class="small">
+                            <strong>Lokasi:</strong>
+                            ${report.location}
+                        </div>
+
+                        <div class="small mb-2">
+                            <strong>Oleh:</strong>
+                            ${report.reporter}
+                        </div>
+
+                        <small class="fw-bold">
+                            Progress
+                        </small>
+
+                        <div
+                            class="progress mt-1"
+                            style="height:8px;">
+
+                            <div
+                                class="progress-bar bg-${progressBarColor}"
+                                style="width:${progress}%">
+                            </div>
+
+                        </div>
+
+                        <div class="text-end">
+
+                            <small
+                                class="text-primary fw-bold">
+
+                                ${progress}%
+
+                            </small>
+
+                        </div>
+
+                    </div>
 
                 </div>
+
+            </div>
             `;
 
         });
 
         html += `
-                </div>
+
+            </div>
+
+            <div class="d-flex justify-content-center align-items-center py-4">
+
+                <button
+                    class="btn btn-outline-secondary me-3"
+                    onclick="prevPage()"
+                    ${!response.data.previous ? "disabled" : ""}>
+
+                    <i class="bi bi-chevron-left"></i>
+                    Previous
+
+                </button>
+
+                <span class="badge bg-primary fs-6">
+
+                    Halaman ${currentPage}
+
+                </span>
+
+                <button
+                    class="btn btn-outline-primary ms-3"
+                    onclick="nextPage()"
+                    ${!response.data.next ? "disabled" : ""}>
+
+                    Next
+                    <i class="bi bi-chevron-right"></i>
+
+                </button>
+
             </div>
         `;
 
@@ -731,8 +1084,13 @@ async function loadStatistics() {
                 "/api/reports/?tab=my_reports"
             );
 
+        console.log("STAT RESPONSE:", response);
+        console.log("STAT DATA:", response.data);
+
         const reports =
-            response.data.results;
+            response.data.results || [];
+
+        console.log("REPORTS:", reports);
 
         const total =
             reports.length;
@@ -744,28 +1102,99 @@ async function loadStatistics() {
 
         const reported =
             reports.filter(
-                r =>
-                    r.status === "REPORTED" ||
-                    r.status === "VERIFIED" ||
-                    r.status === "IN_PROGRESS" ||
-                    r.status === "RESOLVED"
+                r => r.status === "REPORTED"
             ).length;
 
-        document.getElementById(
-            "totalReports"
-        ).innerText = total;
+        const verified =
+            reports.filter(
+                r => r.status === "VERIFIED"
+            ).length;
 
-        document.getElementById(
-            "draftReports"
-        ).innerText = draft;
+        const progress =
+            reports.filter(
+                r => r.status === "IN_PROGRESS"
+            ).length;
 
-        document.getElementById(
-            "reportedReports"
-        ).innerText = reported;
+        const resolved =
+            reports.filter(
+                r => r.status === "RESOLVED"
+            ).length;
+
+        // Card statistik
+
+        if (document.getElementById("totalReports")) {
+            document.getElementById("totalReports").innerText = total;
+        }
+
+        if (document.getElementById("draftReports")) {
+            document.getElementById("draftReports").innerText = draft;
+        }
+
+        if (document.getElementById("reportedReports")) {
+            document.getElementById("reportedReports").innerText = reported;
+        }
+
+        // Sidebar statistik
+
+        if (document.getElementById("sidebarDraft")) {
+            document.getElementById("sidebarDraft").innerText = draft;
+        }
+
+        if (document.getElementById("sidebarReported")) {
+            document.getElementById("sidebarReported").innerText = reported;
+        }
+
+        if (document.getElementById("sidebarVerified")) {
+            document.getElementById("sidebarVerified").innerText = verified;
+        }
+
+        if (document.getElementById("sidebarProgress")) {
+            document.getElementById("sidebarProgress").innerText = progress;
+        }
+
+        if (document.getElementById("sidebarResolved")) {
+            document.getElementById("sidebarResolved").innerText = resolved;
+        }
 
     } catch (error) {
 
-        console.error(error);
+        console.error("LOAD STATISTICS ERROR:", error);
+
+    }
+
+}
+
+function nextPage() {
+
+    currentPage++;
+
+    if (currentTab === "my_reports") {
+
+        loadMyReports();
+
+    } else {
+
+        loadFeed();
+
+    }
+
+}
+
+function prevPage() {
+
+    if (currentPage > 1) {
+
+        currentPage--;
+
+    }
+
+    if (currentTab === "my_reports") {
+
+        loadMyReports();
+
+    } else {
+
+        loadFeed();
 
     }
 

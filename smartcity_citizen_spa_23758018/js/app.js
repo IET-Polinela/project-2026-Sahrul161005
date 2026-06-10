@@ -341,8 +341,63 @@ const pages = {
     <div class="card shadow-sm border-0">
 
         <div class="card-body">
+            <div class="mb-4">
 
-            <ul class="nav nav-tabs mb-4">
+    <div class="d-flex align-items-center">
+
+        <div
+            class="
+                bg-primary-subtle
+                rounded-circle
+                d-flex
+                align-items-center
+                justify-content-center
+                me-3
+            "
+            style="
+                width:60px;
+                height:60px;
+            ">
+
+            <i
+                class="
+                    bi bi-person-fill
+                    fs-3
+                    text-primary
+                ">
+            </i>
+
+        </div>
+
+        <div>
+
+            <h3
+                class="
+                    fw-bold
+                    mb-1
+                ">
+
+                Selamat Datang 👋
+
+            </h3>
+
+            <p
+                class="
+                    text-muted
+                    mb-0
+                ">
+
+                Kelola laporan warga dan
+                pantau perkembangan secara real-time.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+            <ul class="nav nav-tabs mb-4">  
 
                 <li class="nav-item">
 
@@ -374,16 +429,83 @@ const pages = {
 
             <div id="report-list-container">
 
-                <div class="alert alert-primary">
+    <div class="text-center py-5">
 
-                    Pilih menu
-                    <strong>Laporan Saya</strong>
-                    atau
-                    <strong>Feed Kota</strong>
+        <div
+            class="
+                d-inline-flex
+                align-items-center
+                justify-content-center
+                rounded-circle
+                bg-primary-subtle
+                mb-4
+            "
+            style="
+                width:100px;
+                height:100px;
+            ">
 
-                </div>
+            <i
+                class="
+                    bi bi-folder2-open
+                    text-primary
+                "
+                style="
+                    font-size:3rem;
+                ">
+            </i>
 
-            </div>
+        </div>
+
+        <h4 class="fw-bold">
+
+            Belum Ada Data Ditampilkan
+
+        </h4>
+
+        <p
+            class="
+                text-muted
+                mx-auto
+            "
+            style="
+                max-width:450px;
+            ">
+
+            Pilih menu
+            <strong>Laporan Saya</strong>
+            untuk melihat laporan pribadi
+            atau buka
+            <strong>Feed Kota</strong>
+            untuk melihat laporan publik.
+
+        </p>
+
+        <div class="mt-4">
+
+            <button
+                class="btn btn-primary me-2"
+                id="btnMyReportsHome">
+
+                <i class="bi bi-folder-fill me-2"></i>
+                Laporan Saya
+
+            </button>
+
+            <button
+                class="btn btn-outline-primary"
+                id="btnFeedHome">
+
+                <i class="bi bi-globe-americas me-2"></i>
+                Feed Kota
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
 
         </div>
 
@@ -393,79 +515,148 @@ const pages = {
 
         <div class="col-12 col-md-4">
 
-            <div class="card shadow-sm border-0 text-center h-100">
+            <div class="card stat-card h-100">
 
-                <div class="card-body">
+    <div class="card-body">
 
-                    <i class="bi bi-file-earmark-text fs-1 text-primary"></i>
+        <div
+            class="
+                d-flex
+                justify-content-between
+                align-items-center
+            ">
 
-                    <h4
-                        id="totalReports"
-                        class="fw-bold mt-2">
+            <div>
 
-                        0
+                <div class="stat-label">
+                    Total Laporan
+                </div>
 
-                    </h4>
+                <div
+                    id="totalReports"
+                    class="stat-number">
 
-                    <small class="text-muted">
-                        Total Laporan
-                    </small>
+                    0
 
                 </div>
+
+            </div>
+
+            <div
+                class="stat-icon bg-primary-subtle">
+
+                <i
+                    class="
+                        bi bi-file-earmark-text
+                        text-primary
+                    ">
+                </i>
 
             </div>
 
         </div>
 
-        <div class="col-12 col-md-4">
+    </div>
 
-            <div class="card shadow-sm border-0 text-center h-100">
-
-                <div class="card-body">
-
-                    <i class="bi bi-hourglass-split fs-1 text-warning"></i>
-
-                    <h4
-                        id="reportedReports"
-                        class="fw-bold mt-2">
-
-                        0
-
-                    </h4>
-
-                    <small class="text-muted">
-                        Diajukan
-                    </small>
-
-                </div>
-
-            </div>
+</div>
 
         </div>
 
         <div class="col-12 col-md-4">
 
-            <div class="card shadow-sm border-0 text-center h-100">
+            <div class="card stat-card h-100">
 
-                <div class="card-body">
+    <div class="card-body">
 
-                    <i class="bi bi-check-circle-fill fs-1 text-success"></i>
+        <div
+            class="
+                d-flex
+                justify-content-between
+                align-items-center
+            ">
 
-                    <h4
-                        id="draftReports"
-                        class="fw-bold mt-2">
+            <div>
 
-                        0
+                <div class="stat-label">
+                    Diajukan
+                </div>
 
-                    </h4>
+                <div
+                    id="reportedReports"
+                    class="stat-number">
 
-                    <small class="text-muted">
-                        Draft
-                    </small>
+                    0
 
                 </div>
 
             </div>
+
+            <div
+                class="stat-icon bg-warning-subtle">
+
+                <i
+                    class="
+                        bi bi-hourglass-split
+                        text-warning
+                    ">
+                </i>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+        </div>
+
+        <div class="col-12 col-md-4">
+
+            <div class="card stat-card h-100">
+
+    <div class="card-body">
+
+        <div
+            class="
+                d-flex
+                justify-content-between
+                align-items-center
+            ">
+
+            <div>
+
+                <div class="stat-label">
+                    Draft
+                </div>
+
+                <div
+                    id="draftReports"
+                    class="stat-number">
+
+                    0
+
+                </div>
+
+            </div>
+
+            <div
+                class="stat-icon bg-success-subtle">
+
+                <i
+                    class="
+                        bi bi-check-circle-fill
+                        text-success
+                    ">
+                </i>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
         </div>
 
@@ -1430,3 +1621,35 @@ window.addEventListener(
     "load",
     renderNavbar
 );
+
+const btnMyReportsHome =
+    document.getElementById(
+        "btnMyReportsHome"
+    );
+
+if (btnMyReportsHome) {
+
+    btnMyReportsHome.onclick =
+        function () {
+
+            loadMyReports();
+
+        };
+
+}
+
+const btnFeedHome =
+    document.getElementById(
+        "btnFeedHome"
+    );
+
+if (btnFeedHome) {
+
+    btnFeedHome.onclick =
+        function () {
+
+            loadFeed();
+
+        };
+
+}

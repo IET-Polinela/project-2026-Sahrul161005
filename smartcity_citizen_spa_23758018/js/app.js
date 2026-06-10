@@ -370,26 +370,13 @@ const pages = {
         </div>
 
         <div>
-
-            <h3
-                class="
-                    fw-bold
-                    mb-1
-                ">
-
+            <h3 class="fw-bold mb-1">
                 Selamat Datang 👋
-
             </h3>
 
-            <p
-                class="
-                    text-muted
-                    mb-0
-                ">
-
+            <p class="text-muted mb-0">
                 Kelola laporan warga dan
                 pantau perkembangan secara real-time.
-
             </p>
 
         </div>
@@ -401,76 +388,36 @@ const pages = {
 
                 <li class="nav-item">
 
-                    <button
-    class="nav-link active"
-    id="btnMyReportsTab">
-
+                    <button class="nav-link active" id="btnMyReportsTab">
                         <i class="bi bi-folder-fill me-2"></i>
                         Laporan Saya
-
                     </button>
 
                 </li>
 
                 <li class="nav-item">
-
-                    <button
-    class="nav-link"
-    id="btnFeedTab">
-
+                    <button class="nav-link" id="btnFeedTab">
                         <i class="bi bi-globe-americas me-2"></i>
                         Feed Kota (Publik)
-
                     </button>
-
                 </li>
-
             </ul>
 
             <div id="report-list-container">
+                <div class="text-center py-5">
 
-    <div class="text-center py-5">
+        <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-primary-subtle mb-4 "
+            style=" width:100px; height:100px;">
 
-        <div
-            class="
-                d-inline-flex
-                align-items-center
-                justify-content-center
-                rounded-circle
-                bg-primary-subtle
-                mb-4
-            "
-            style="
-                width:100px;
-                height:100px;
-            ">
-
-            <i
-                class="
-                    bi bi-folder2-open
-                    text-primary
-                "
-                style="
-                    font-size:3rem;
-                ">
-            </i>
-
+            <i class=" bi bi-folder2-open text-primary " style=" font-size:3rem;"></i>
         </div>
 
         <h4 class="fw-bold">
-
             Belum Ada Data Ditampilkan
-
         </h4>
 
-        <p
-            class="
-                text-muted
-                mx-auto
-            "
-            style="
-                max-width:450px;
-            ">
+        <p class=" text-muted mx-auto "
+            style=" max-width:450px; ">
 
             Pilih menu
             <strong>Laporan Saya</strong>

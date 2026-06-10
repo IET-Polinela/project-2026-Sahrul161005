@@ -237,7 +237,7 @@ const pages = {
 
             <div class="col-12 col-lg-3">
 
-    <div class="card shadow-sm border-0">
+    <div class="card border-0 sidebar-premium">
 
         <div class="card-body">
 

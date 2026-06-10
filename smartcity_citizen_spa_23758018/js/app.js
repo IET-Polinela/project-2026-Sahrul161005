@@ -243,7 +243,7 @@ const pages = {
 
             <button
                 id="btnOpenReportModal"
-                class="btn btn-primary w-100 py-3 fw-bold mb-4">
+                class="btn btn-primary w-100 py-3 fw-bold mb-4 shadow-sm"
 
                 <i class="bi bi-plus-circle me-2"></i>
                 Buat Laporan Baru
@@ -357,9 +357,9 @@ const pages = {
 
 </div>
 
-            <div class="col-12 col-lg-7">
+            <div class="col-12 col-lg-9">
 
-    <div class="card shadow-sm border-0">
+    <div class="card dashboard-card border-0">
 
         <div class="card-body">
             <div class="mb-4">
@@ -375,13 +375,12 @@ const pages = {
 
         <div>
             <h3 class="fw-bold mb-1">
-                Selamat Datang 👋
+                Dashboard Citizen Portal
             </h3>
-
-            <p class="text-muted mb-0">
-                Kelola laporan warga dan
-                pantau perkembangan secara real-time.
-            </p>
+        <p class="text-muted mb-0">
+            Pantau laporan, kelola pengaduan,
+            dan lihat perkembangan kota secara real-time.
+        </p>
 
         </div>
 
@@ -462,7 +461,7 @@ const pages = {
 
     </div>
 
-    <div class="row g-3 mt-1">
+    <div class="row g-4 mt-3">
 
         <div class="col-12 col-md-4">
 
@@ -480,8 +479,17 @@ const pages = {
             <div>
 
                 <div class="stat-label">
-                    Total Laporan
-                </div>
+
+    Total Laporan
+
+    <div class=" text-success small mt-1 ">
+
+        <i class="bi bi-arrow-up"></i>
+        Aktif
+
+    </div>
+
+</div>
 
                 <div
                     id="totalReports"
@@ -519,18 +527,12 @@ const pages = {
 
     <div class="card-body">
 
-        <div
-            class="
-                d-flex
-                justify-content-between
-                align-items-center
-            ">
-
-            <div>
-
-                <div class="stat-label">
-                    Diajukan
-                </div>
+        <div class=" d-flex justify-content-between align-items-center "> <div>
+        <div class="stat-label"> Diajukan 
+            <div class=" text-warning small mt-1">
+            Menunggu Verifikasi
+    </div>
+</div>
 
                 <div
                     id="reportedReports"
@@ -578,8 +580,16 @@ const pages = {
             <div>
 
                 <div class="stat-label">
-                    Draft
-                </div>
+
+    Draft
+
+    <div class="text-secondary small mt-1">
+
+        Belum Dikirim
+
+    </div>
+
+</div>
 
                 <div
                     id="draftReports"

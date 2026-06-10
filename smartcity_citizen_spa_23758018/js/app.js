@@ -250,75 +250,98 @@ const pages = {
 
             </button>
 
-            <h6 class="fw-bold text-uppercase mb-3">
-                <i class="bi bi-activity me-2"></i>
-                Status Laporan Anda
-            </h6>
+            <h6 class="fw-bold mb-4">
 
-            <div class="d-flex justify-content-between border-bottom py-2">
-                <span>
-                    <i class="bi bi-pencil-square me-2"></i>
-                    Draft
-                </span>
+    <i class="bi bi-bar-chart-line-fill me-2"></i>
+    Ringkasan Status
 
-                <span
-                    id="sidebarDraft"
-                    class="badge bg-secondary">
-                    0
-                </span>
-            </div>
+</h6>
 
-            <div class="d-flex justify-content-between border-bottom py-2">
-                <span>
-                    <i class="bi bi-send me-2 text-warning"></i>
-                    Diajukan
-                </span>
+<div class="status-card mb-3">
 
-                <span
-                    id="sidebarReported"
-                    class="badge bg-warning text-dark">
-                    0
-                </span>
-            </div>
+    <div class="d-flex justify-content-between">
 
-            <div class="d-flex justify-content-between border-bottom py-2">
-                <span>
-                    <i class="bi bi-patch-check-fill me-2 text-info"></i>
-                    Diverifikasi
-                </span>
+        <span>
+            <i class="bi bi-pencil-square text-secondary me-2"></i>
+            Draft
+        </span>
 
-                <span
-                    id="sidebarVerified"
-                    class="badge bg-info">
-                    0
-                </span>
-            </div>
+        <span
+            id="sidebarDraft"
+            class="badge bg-secondary">
 
-            <div class="d-flex justify-content-between border-bottom py-2">
-                <span>
-                    <i class="bi bi-gear-fill me-2 text-primary"></i>
-                    Diproses
-                </span>
+            0
 
-                <span
-                    id="sidebarProgress"
-                    class="badge bg-primary">
-                    0
-                </span>
-            </div>
+        </span>
 
-            <div class="d-flex justify-content-between py-2">
-                <span>
-                    <i class="bi bi-check-circle-fill me-2 text-success"></i>
-                    Selesai
-                </span>
+    </div>
 
-                <span
-                    id="sidebarResolved"
-                    class="badge bg-success">
-                    0
-                </span>
-            </div>
+</div>
+
+<div class="status-card mb-3">
+
+    <div class="d-flex justify-content-between">
+
+        <span>
+            <i class="bi bi-send-fill text-warning me-2"></i>
+            Diajukan
+        </span>
+
+        <span
+            id="sidebarReported"
+            class="badge bg-warning text-dark">
+
+            0
+
+        </span>
+
+    </div>
+
+</div>
+
+        <div class="status-card mb-3">
+
+            <div class="d-flex justify-content-between">
+            <span>
+                <i class="bi bi-patch-check-fill text-info me-2"></i>
+                Diverifikasi
+            </span>
+
+            <span id="sidebarVerified" class="badge bg-info"> 0 </span>
+
+        </div>
+
+    </div>
+
+        <div class="status-card mb-3">
+            <div class="d-flex justify-content-between">
+        <span>
+            <i class="bi bi-gear-fill text-primary me-2"></i>
+            Diproses
+        </span>
+
+        <span id="sidebarProgress" class="badge bg-primary"> 0</span>
+
+    </div>
+
+</div>
+
+<div class="status-card">
+
+    <div class="d-flex justify-content-between">
+
+        <span>
+            <i class="bi bi-check-circle-fill text-success me-2"></i>
+            Selesai
+        </span>
+
+        <span id="sidebarResolved" class="badge bg-success"> 0
+
+        </span>
+
+    </div>
+
+</div>
 
             <hr>
 

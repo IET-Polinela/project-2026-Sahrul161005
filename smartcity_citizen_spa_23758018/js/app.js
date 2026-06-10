@@ -52,6 +52,93 @@ const pages = {
         </div>
     `,
 
+    register: `
+<div class="row justify-content-center">
+
+    <div class="col-md-5">
+
+        <div class="card shadow border-0">
+
+            <div class="card-body p-4">
+
+                <h3 class="text-center mb-4 fw-bold">
+
+                    <i class="bi bi-person-plus-fill me-2"></i>
+                    Daftar Citizen
+
+                </h3>
+
+                <form id="register-form">
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Username
+                        </label>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="registerUsername"
+                            placeholder="Masukkan username">
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Password
+                        </label>
+
+                        <input
+                            type="password"
+                            class="form-control"
+                            id="registerPassword"
+                            placeholder="Masukkan password">
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Konfirmasi Password
+                        </label>
+
+                        <input
+                            type="password"
+                            class="form-control"
+                            id="registerPassword2"
+                            placeholder="Ulangi password">
+
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="btn btn-success w-100">
+
+                        Daftar
+
+                    </button>
+
+                </form>
+
+                <div class="text-center mt-3">
+
+                    <a href="#login">
+                        Sudah punya akun? Login
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+`,
+
     dashboard: `
         <div class="row g-3">
 
@@ -1199,3 +1286,54 @@ function prevPage() {
     }
 
 }
+
+function renderNavbar() {
+
+    const token =
+        localStorage.getItem(
+            "access_token"
+        );
+
+    const navMenu =
+        document.getElementById(
+            "nav-menu"
+        );
+
+    if (!navMenu) return;
+
+    if (!token) {
+
+        navMenu.innerHTML = `
+
+            <a
+                href="#login"
+                class="btn btn-outline-light btn-sm me-2">
+
+                <i class="bi bi-box-arrow-in-right me-1"></i>
+                Login
+
+            </a>
+
+            <a
+                href="#register"
+                class="btn btn-light btn-sm">
+
+                <i class="bi bi-person-plus me-1"></i>
+                Daftar
+
+            </a>
+
+        `;
+
+    } else {
+
+        navMenu.innerHTML = "";
+
+    }
+
+}
+
+window.addEventListener(
+    "load",
+    renderNavbar
+);

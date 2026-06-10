@@ -14,6 +14,7 @@ function renderPage() {
     if (!route) {
         route = "login";
     }
+    // Register Page
 
     const token =
         localStorage.getItem(
@@ -52,6 +53,18 @@ function renderPage() {
         }
 
     }
+    if (route === "register") {
+
+    if (
+        typeof setupRegisterForm ===
+        "function"
+    ) {
+
+        setupRegisterForm();
+
+    }
+
+}
 
     // Dashboard Page
     if (route === "dashboard") {

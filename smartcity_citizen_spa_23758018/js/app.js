@@ -345,9 +345,7 @@ const pages = {
 
             <hr>
 
-            <button
-    id="btnLogout"
-    class="btn btn-outline-danger w-100">
+            <button id="btnLogout" class="btn btn-outline-danger w-100">
 
     <i class="bi bi-box-arrow-right me-2"></i>
     Logout
@@ -368,27 +366,10 @@ const pages = {
 
     <div class="d-flex align-items-center">
 
-        <div
-            class="
-                bg-primary-subtle
-                rounded-circle
-                d-flex
-                align-items-center
-                justify-content-center
-                me-3
-            "
-            style="
-                width:60px;
-                height:60px;
-            ">
+        <div class=" bg-primary-subtle rounded-circle d-flex align-items-center justify-content-center me-3 "
+            style=" width:60px; height:60px; ">
 
-            <i
-                class="
-                    bi bi-person-fill
-                    fs-3
-                    text-primary
-                ">
-            </i>
+            <i class=" bi bi-person-fill fs-3 text-primary"></i>
 
         </div>
 

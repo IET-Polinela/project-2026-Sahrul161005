@@ -4,129 +4,222 @@ let currentTab = "my_reports";
 const pages = {
 
     login: `
-        <div class="row justify-content-center">
-            <div class="col-md-4">
+<div class="container">
 
-                <div class="card shadow border-0">
-                    <div class="card-body p-4">
+    <div class="row align-items-center min-vh-75">
 
-                        <h3 class="text-center mb-4 fw-bold">
-                            <i class="bi bi-person-circle me-2"></i>
-                            Login Citizen
-                        </h3>
+        <div class="col-lg-6 d-none d-lg-block">
 
-                        <form id="login-form">
+            <div class="pe-5">
 
-                            <div class="mb-3">
-                                <label class="form-label">Username</label>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    id="username"
-                                    placeholder="Masukkan username"
-                                    required>
-                            </div>
+                <h1 class="hero-title mb-3">
+                    Smart City Citizen Portal
+                </h1>
 
-                            <div class="mb-3">
-                                <label class="form-label">Password</label>
-                                <input
-                                    type="password"
-                                    class="form-control"
-                                    id="password"
-                                    placeholder="Masukkan password"
-                                    required>
-                            </div>
+                <p class="hero-subtitle mb-4">
 
-                            <button
-                                type="submit"
-                                class="btn btn-primary w-100 fw-semibold">
-                                Login
-                            </button>
+                    Laporkan masalah kota secara cepat,
+                    transparan, dan real-time.
 
-                        </form>
+                </p>
 
-                    </div>
+                <div class="feature-item">
+                    🚦 Pelaporan Infrastruktur
+                </div>
+
+                <div class="feature-item">
+                    🛣️ Monitoring Status Laporan
+                </div>
+
+                <div class="feature-item">
+                    📍 Pelacakan Lokasi Masalah
+                </div>
+
+                <div class="feature-item">
+                    🔔 Update Progress Real-Time
                 </div>
 
             </div>
+
         </div>
-    `,
+
+        <div class="col-lg-6">
+
+            <div class="card login-card">
+
+                <div class="card-body p-5">
+
+                    <div class="text-center mb-4">
+
+                        <i class="bi bi-person-circle fs-1 text-primary"></i>
+
+                        <h2 class="fw-bold mt-2">
+                            Login Citizen
+                        </h2>
+
+                        <p class="text-muted">
+                            Masuk ke akun Anda
+                        </p>
+
+                    </div>
+
+                    <form id="login-form">
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Username
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="username"
+                                placeholder="Masukkan username"
+                                required>
+
+                        </div>
+
+                        <div class="mb-4">
+
+                            <label class="form-label">
+                                Password
+                            </label>
+
+                            <input
+                                type="password"
+                                class="form-control"
+                                id="password"
+                                placeholder="Masukkan password"
+                                required>
+
+                        </div>
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary w-100 py-3 fw-bold">
+
+                            Login
+
+                        </button>
+
+                    </form>
+
+                    <div class="text-center mt-4">
+
+                        Belum punya akun?
+
+                        <a href="#register"
+                           class="fw-bold text-decoration-none">
+
+                            Daftar
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+`,
 
     register: `
-<div class="row justify-content-center">
+<div class="container">
 
-    <div class="col-md-5">
+    <div class="row justify-content-center">
 
-        <div class="card shadow border-0">
+        <div class="col-lg-6">
 
-            <div class="card-body p-4">
+            <div class="card login-card">
 
-                <h3 class="text-center mb-4 fw-bold">
+                <div class="card-body p-5">
 
-                    <i class="bi bi-person-plus-fill me-2"></i>
-                    Daftar Citizen
+                    <div class="text-center mb-4">
 
-                </h3>
+                        <i class="bi bi-person-plus-fill fs-1 text-success"></i>
 
-                <form id="register-form">
+                        <h2 class="fw-bold mt-2">
+                            Daftar Citizen
+                        </h2>
 
-                    <div class="mb-3">
-
-                        <label class="form-label">
-                            Username
-                        </label>
-
-                        <input
-                            type="text"
-                            class="form-control"
-                            id="registerUsername"
-                            placeholder="Masukkan username">
+                        <p class="text-muted">
+                            Buat akun baru
+                        </p>
 
                     </div>
 
-                    <div class="mb-3">
+                    <form id="register-form">
 
-                        <label class="form-label">
-                            Password
-                        </label>
+                        <div class="mb-3">
 
-                        <input
-                            type="password"
-                            class="form-control"
-                            id="registerPassword"
-                            placeholder="Masukkan password">
+                            <label class="form-label">
+                                Username
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="registerUsername"
+                                placeholder="Masukkan username">
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Password
+                            </label>
+
+                            <input
+                                type="password"
+                                class="form-control"
+                                id="registerPassword"
+                                placeholder="Masukkan password">
+
+                        </div>
+
+                        <div class="mb-4">
+
+                            <label class="form-label">
+                                Konfirmasi Password
+                            </label>
+
+                            <input
+                                type="password"
+                                class="form-control"
+                                id="registerPassword2"
+                                placeholder="Ulangi password">
+
+                        </div>
+
+                        <button
+                            type="submit"
+                            class="btn btn-success w-100 py-3 fw-bold">
+
+                            Daftar Sekarang
+
+                        </button>
+
+                    </form>
+
+                    <div class="text-center mt-4">
+
+                        Sudah punya akun?
+
+                        <a href="#login"
+                           class="fw-bold text-decoration-none">
+
+                            Login
+
+                        </a>
 
                     </div>
-
-                    <div class="mb-3">
-
-                        <label class="form-label">
-                            Konfirmasi Password
-                        </label>
-
-                        <input
-                            type="password"
-                            class="form-control"
-                            id="registerPassword2"
-                            placeholder="Ulangi password">
-
-                    </div>
-
-                    <button
-                        type="submit"
-                        class="btn btn-success w-100">
-
-                        Daftar
-
-                    </button>
-
-                </form>
-
-                <div class="text-center mt-3">
-
-                    <a href="#login">
-                        Sudah punya akun? Login
-                    </a>
 
                 </div>
 

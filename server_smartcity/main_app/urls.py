@@ -20,6 +20,6 @@ urlpatterns = [
     path('edit/<int:pk>/', ReportUpdateView.as_view(), name='edit_report'),
     path('delete/<int:pk>/', ReportDeleteView.as_view(), name='delete_report'),
     path('update-status/<int:pk>/', ReportUpdateStatusView.as_view(), name='update_status'),
-    path('search/', SearchReport.as_view()),
+    path('search/', SearchReport.as_view(), name='report_search'),
     path('api/report/<int:pk>/', ReportDetailAPI.as_view(), name='report_api'),
 ]

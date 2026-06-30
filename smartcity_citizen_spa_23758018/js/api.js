@@ -54,7 +54,19 @@ async function requestAPI(
         data = null;
 
     }
+if (response.status === 401) {
 
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+    localStorage.removeItem("username");
+
+    window.location.hash = "#login";
+
+    return {
+        status: 401,
+        data: null
+    };
+}
     return {
         status: response.status,
         data

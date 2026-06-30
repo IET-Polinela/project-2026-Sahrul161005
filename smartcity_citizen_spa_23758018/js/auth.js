@@ -1,6 +1,6 @@
 function setupLoginForm() {
 
-    const form = document.getElementById("login-form");
+    const form = document.getElementById("loginForm");
 
     if (!form) return;
 
@@ -9,10 +9,10 @@ function setupLoginForm() {
         event.preventDefault();
 
         const username =
-            document.getElementById("username").value;
+            document.getElementById("loginUsername").value;
 
         const password =
-            document.getElementById("password").value;
+            document.getElementById("loginPassword").value;
 
         const response = await requestAPI(
             "/api/token/",
@@ -35,6 +35,9 @@ function setupLoginForm() {
         response.data.refresh
     );
 
+    localStorage.setItem("username", username);
+    
+
     renderNavbar();
 
     alert("Login berhasil!");
@@ -53,13 +56,9 @@ function setupLoginForm() {
 
 function logout() {
 
-    localStorage.removeItem(
-        "access_token"
-    );
-
-    localStorage.removeItem(
-        "refresh_token"
-    );
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+    localStorage.removeItem("username");
 
     renderNavbar();
 

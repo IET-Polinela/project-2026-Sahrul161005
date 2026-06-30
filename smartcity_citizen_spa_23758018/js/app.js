@@ -63,7 +63,7 @@ const pages = {
 
                     </div>
 
-                    <form id="login-form">
+                    <form id="loginForm">
 
                         <div class="mb-3">
 
@@ -74,7 +74,7 @@ const pages = {
                             <input
                                 type="text"
                                 class="form-control"
-                                id="username"
+                                id="loginUsername"
                                 placeholder="Masukkan username"
                                 required>
 
@@ -89,7 +89,7 @@ const pages = {
                             <input
                                 type="password"
                                 class="form-control"
-                                id="password"
+                                id="loginPassword"
                                 placeholder="Masukkan password"
                                 required>
 
@@ -234,7 +234,8 @@ const pages = {
 
     dashboard: `
         <div class="row g-3">
-
+<div id="summaryStats">
+</div>
             <div class="col-12 col-lg-3">
 
     <div class="card border-0 sidebar-premium">
@@ -242,8 +243,7 @@ const pages = {
         <div class="card-body">
 
             <button
-                id="btnOpenReportModal"
-                class="btn btn-primary w-100 py-3 fw-bold mb-4 shadow-sm"
+                id="btnBukaModal"
 
                 <i class="bi bi-plus-circle me-2"></i>
                 Buat Laporan Baru
@@ -391,7 +391,7 @@ const pages = {
 
                 <li class="nav-item">
 
-                    <button class="nav-link active" id="btnMyReportsTab">
+                    <button class="nav-link active" id="tabMyReports">
                         <i class="bi bi-folder-fill me-2"></i>
                         Laporan Saya
                     </button>
@@ -399,14 +399,14 @@ const pages = {
                 </li>
 
                 <li class="nav-item">
-                    <button class="nav-link" id="btnFeedTab">
+                    <button class="nav-link" id="tabFeedKota">
                         <i class="bi bi-globe-americas me-2"></i>
                         Feed Kota (Publik)
                     </button>
                 </li>
             </ul>
 
-            <div id="report-list-container">
+            <div id="listContainer">
                 <div class="text-center py-5">
 
         <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-primary-subtle mb-4 "
@@ -634,7 +634,7 @@ function setupReportModal() {
 
     const btn =
         document.getElementById(
-            "btnOpenReportModal"
+            "btnBukaModal"
         );
 
     if (btn) {
@@ -667,9 +667,7 @@ function setupReportModal() {
             }
 
             const btnSubmit =
-                document.getElementById(
-                    "btnSubmitReport"
-                );
+                document.getElementById("btnSubmit");
 
             if (btnSubmit) {
 
@@ -689,7 +687,7 @@ function setupReportModal() {
 // Tab Laporan Saya
 const btnMyReportsTab =
     document.getElementById(
-        "btnMyReportsTab"
+        "tabMyReports"
     );
 
 if (btnMyReportsTab) {
@@ -709,7 +707,7 @@ if (btnMyReportsTab) {
 // Tab Feed Publik
 const btnFeedTab =
     document.getElementById(
-        "btnFeedTab"
+        "tabFeedKota"
     );
 
 if (btnFeedTab) {
@@ -753,16 +751,16 @@ if (btnFeedTab) {
 async function createDraftReport() {
 
     const title =
-        document.getElementById("reportTitle").value;
+        document.getElementById("inputTitle").value;
 
     const category =
-        document.getElementById("reportCategory").value;
+        document.getElementById("inputCategory").value;
 
     const description =
-        document.getElementById("reportDescription").value;
+        document.getElementById("inputDescription").value;
 
     const reportLocation =
-        document.getElementById("reportLocation").value;
+        document.getElementById("inputLocation").value;
 
     try {
 
@@ -838,16 +836,16 @@ async function submitReport() {
     console.log("Tombol Ajukan Diklik");
 
     const title =
-        document.getElementById("reportTitle").value;
+        document.getElementById("inputTitle").value;
 
     const category =
-        document.getElementById("reportCategory").value;
+        document.getElementById("inputCategory").value;
 
     const description =
-        document.getElementById("reportDescription").value;
+        document.getElementById("inputDescription").value;
 
     const reportLocation =
-        document.getElementById("reportLocation").value;
+        document.getElementById("inputLocation").value;
 
     try {
 
@@ -924,7 +922,7 @@ async function loadMyReports() {
 
         const container =
             document.getElementById(
-                "report-list-container"
+                "listContainer"
             );
 
         if (!container) return;
@@ -1135,16 +1133,16 @@ async function editReport(id) {
 
         const report = response.data;
 
-        document.getElementById("reportTitle").value =
+        document.getElementById("inputTitle").value =
             report.title;
 
-        document.getElementById("reportCategory").value =
+        document.getElementById("inputCategory").value =
             report.category;
 
-        document.getElementById("reportDescription").value =
+        document.getElementById("inputDescription").value =
             report.description;
 
-        document.getElementById("reportLocation").value =
+        document.getElementById("inputLocation").value =
             report.location;
 
         document.getElementById("btnDraft").innerText =
@@ -1244,7 +1242,7 @@ async function loadFeed() {
 
         const container =
             document.getElementById(
-                "report-list-container"
+                "listContainer"
             );
 
         if (!container) return;
@@ -1488,6 +1486,50 @@ async function loadStatistics() {
             document.getElementById("sidebarResolved").innerText = resolved;
         }
 
+        const summary =
+document.getElementById(
+    "summaryStats"
+);
+
+if(summary){
+
+summary.innerHTML = `
+<div class="row mb-3">
+
+<div class="col">
+<span class="badge bg-secondary">
+${draft}
+</span>
+</div>
+
+<div class="col">
+<span class="badge bg-warning">
+${reported}
+</span>
+</div>
+
+<div class="col">
+<span class="badge bg-info">
+${verified}
+</span>
+</div>
+
+<div class="col">
+<span class="badge bg-primary">
+${progress}
+</span>
+</div>
+
+<div class="col">
+<span class="badge bg-success">
+${resolved}
+</span>
+</div>
+
+</div>
+`;
+}
+
     } catch (error) {
 
         console.error("LOAD STATISTICS ERROR:", error);
@@ -1541,7 +1583,7 @@ function renderNavbar() {
 
     const navMenu =
         document.getElementById(
-            "nav-menu"
+            "nav-menus"
         );
 
     if (!navMenu) return;

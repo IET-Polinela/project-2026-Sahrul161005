@@ -290,7 +290,7 @@ footer {
 
         </a>
 
-        <div id="nav-menu"></div>
+        <div id="nav-menus"></div>
 
     </div>
 
@@ -308,9 +308,11 @@ footer {
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <h5 class="modal-title">
-                        Buat / Edit Laporan
-                    </h5>
+                    <h5
+    class="modal-title"
+    id="reportModalLabel">
+    Buat Laporan Baru
+</h5>
 
                     <button
                         type="button"
@@ -330,7 +332,7 @@ footer {
 
                             <input
                                 type="text"
-                                id="reportTitle"
+                                id="inputTitle"
                                 class="form-control"
                                 required>
                         </div>
@@ -340,11 +342,23 @@ footer {
                                 Kategori
                             </label>
 
-                            <input
-                                type="text"
-                                id="reportCategory"
-                                class="form-control"
-                                required>
+                            <select
+    id="inputCategory"
+    class="form-select">
+
+    <option value="Infrastruktur">
+        Infrastruktur
+    </option>
+
+    <option value="Kebersihan">
+        Kebersihan
+    </option>
+
+    <option value="Keamanan">
+        Keamanan
+    </option>
+
+</select>
                         </div>
 
                         <div class="mb-3">
@@ -353,7 +367,7 @@ footer {
                             </label>
 
                             <textarea
-                                id="reportDescription"
+                                id="inputDescription"
                                 class="form-control"
                                 rows="4"
                                 required></textarea>
@@ -366,7 +380,7 @@ footer {
 
                             <input
                                 type="text"
-                                id="reportLocation"
+                                id="inputLocation"
                                 class="form-control"
                                 required>
                         </div>
@@ -381,11 +395,11 @@ footer {
                             </button>
 
                             <button
-                                type="button"
-                                class="btn btn-primary"
-                                id="btnSubmitReport">
-                                Ajukan
-                            </button>
+    type="button"
+    class="btn btn-primary"
+    id="btnSubmit">
+    Ajukan
+</button>
 
                         </div>
 

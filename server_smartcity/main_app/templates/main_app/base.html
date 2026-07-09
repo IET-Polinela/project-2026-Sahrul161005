@@ -271,6 +271,10 @@
         var overlay = document.getElementById('loading-overlay');
         document.querySelectorAll('form').forEach(function (form) {
             form.addEventListener('submit', function (event) {
+                if (form.dataset.instantSubmit === 'true') {
+                    return;
+                }
+
                 if (form.dataset.isSubmitting === 'true') {
                     return;
                 }

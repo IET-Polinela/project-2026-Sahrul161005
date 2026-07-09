@@ -162,7 +162,11 @@ REST_FRAMEWORK = {
 
 CORS_ALLOW_ALL_ORIGINS = True
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:8001",
+    "http://127.0.0.1:8001",
+    "http://103.151.63.71:8001",
+]
 SPECTACULAR_SETTINGS = {
 
     'TITLE': 'Smart City Citizen Portal API',

@@ -7,7 +7,6 @@
     vertical-align: middle;
 }
 
-/* Lebar kolom */
 .col-title {
     max-width: 250px;
     white-space: normal;
@@ -31,7 +30,6 @@
     width: 240px;
 }
 
-/* Tombol biar rapi */
 .action-buttons .btn {
     margin: 2px;
 }
@@ -51,112 +49,103 @@
     {% endif %}
 </div>
 
-<!-- SEARCH -->
 <div class="mb-3">
-    <input type="text" id="search" class="form-control" placeholder="Cari laporan...">
+    <input
+        id="searchInput"
+        type="text"
+        class="form-control"
+        placeholder="Cari laporan...">
 </div>
-
-<div id="results">
-
-{% if reports %}
 
 <div class="table-responsive">
-<table class="table table-striped table-bordered table-hover bg-white shadow-sm">
+    <table class="table table-striped table-bordered table-hover bg-white shadow-sm">
+        <thead>
+            <tr>
+                <th class="col-title">Judul</th>
+                <th class="col-category">Kategori</th>
+                <th class="col-location">Lokasi</th>
+                <th class="col-status">Status</th>
+                <th class="col-action">Aksi</th>
+            </tr>
+        </thead>
 
-    <thead>
-        <tr>
-            <th class="col-title">Judul</th>
-            <th class="col-category">Kategori</th>
-            <th class="col-location">Lokasi</th>
-            <th class="col-status">Status</th>
-            <th class="col-action">Aksi</th>
-        </tr>
-    </thead>
+        <tbody id="reportTableBody">
+            {% for report in reports %}
+            <tr>
+                <td class="col-title">{{ report.title }}</td>
+                <td class="col-category">{{ report.category }}</td>
+                <td class="col-location">{{ report.location }}</td>
 
-    <tbody>
-    {% for report in reports %}
-    <tr>
+                <td class="col-status">
+                    {% if report.status == "REPORTED" %}
+                        <span class="badge bg-danger">Reported</span>
+                    {% elif report.status == "VERIFIED" %}
+                        <span class="badge bg-warning text-dark">Verified</span>
+                    {% elif report.status == "IN_PROGRESS" %}
+                        <span class="badge bg-primary">In Progress</span>
+                    {% elif report.status == "RESOLVED" %}
+                        <span class="badge bg-success">Resolved</span>
+                    {% else %}
+                        <span class="badge bg-secondary">{{ report.status }}</span>
+                    {% endif %}
+                </td>
 
-        <td class="col-title">{{ report.title }}</td>
-        <td class="col-category">{{ report.category }}</td>
-        <td class="col-location">{{ report.location }}</td>
+                <td class="col-action">
+                    <div class="action-buttons d-flex flex-wrap">
+                        <a href="/detail/{{ report.id }}/" class="btn btn-sm btn-info">Detail</a>
 
-        <!-- STATUS -->
-        <td class="col-status">
-            {% if report.status == "REPORTED" %}
-                <span class="badge bg-danger">Reported</span>
-            {% elif report.status == "VERIFIED" %}
-                <span class="badge bg-warning text-dark">Verified</span>
-            {% elif report.status == "IN_PROGRESS" %}
-                <span class="badge bg-primary">In Progress</span>
-            {% elif report.status == "RESOLVED" %}
-                <span class="badge bg-success">Resolved</span>
-            {% endif %}
-        </td>
+                        {% if user.is_admin %}
+                        <button
+                            type="button"
+                            class="btn btn-sm btn-warning"
+                            onclick="alert('Admin tidak diperbolehkan mengubah isi laporan warga.')">
+                            Edit
+                        </button>
 
-        <!-- AKSI -->
-        <td class="col-action">
-            <div class="action-buttons d-flex flex-wrap">
+                        <button
+                            type="button"
+                            class="btn btn-sm btn-danger"
+                            onclick="alert('Admin tidak diperbolehkan menghapus laporan warga.')">
+                            Delete
+                        </button>
 
-                <a href="/detail/{{ report.id }}/" class="btn btn-sm btn-info">Detail</a>
-
-                {% if user.is_admin %}
-
-                <button
-    type="button"
-    class="btn btn-sm btn-warning"
-    onclick="alert('Admin tidak diperbolehkan mengubah isi laporan warga.')">
-
-    Edit
-
-</button>
-
-<button
-    type="button"
-    class="btn btn-sm btn-danger"
-    onclick="alert('Admin tidak diperbolehkan menghapus laporan warga.')">
-
-    Delete
-
-</button>
-                {% if report.status == "REPORTED" %}
-                <form method="POST" action="/update-status/{{ report.id }}/">
-                    {% csrf_token %}
-                    <input type="hidden" name="status" value="VERIFIED">
-                    <button class="btn btn-sm btn-secondary">Verify</button>
-                </form>
-
-                {% elif report.status == "VERIFIED" %}
-                <form method="POST" action="/update-status/{{ report.id }}/">
-                    {% csrf_token %}
-                    <input type="hidden" name="status" value="IN_PROGRESS">
-                    <button class="btn btn-sm btn-primary">Process</button>
-                </form>
-
-                {% elif report.status == "IN_PROGRESS" %}
-                <form method="POST" action="/update-status/{{ report.id }}/">
-                    {% csrf_token %}
-                    <input type="hidden" name="status" value="RESOLVED">
-                    <button class="btn btn-sm btn-success">Resolve</button>
-                </form>
-                {% endif %}
-
-                {% endif %}
-
-            </div>
-        </td>
-
-    </tr>
-    {% endfor %}
-    </tbody>
-
-</table>
+                        {% if report.status == "REPORTED" %}
+                        <form method="POST" action="/update-status/{{ report.id }}/">
+                            {% csrf_token %}
+                            <input type="hidden" name="status" value="VERIFIED">
+                            <button class="btn btn-sm btn-secondary">Verify</button>
+                        </form>
+                        {% elif report.status == "VERIFIED" %}
+                        <form method="POST" action="/update-status/{{ report.id }}/">
+                            {% csrf_token %}
+                            <input type="hidden" name="status" value="IN_PROGRESS">
+                            <button class="btn btn-sm btn-primary">Process</button>
+                        </form>
+                        {% elif report.status == "IN_PROGRESS" %}
+                        <form method="POST" action="/update-status/{{ report.id }}/">
+                            {% csrf_token %}
+                            <input type="hidden" name="status" value="RESOLVED">
+                            <button class="btn btn-sm btn-success">Resolve</button>
+                        </form>
+                        {% endif %}
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="text-center text-muted">
+                    Belum ada laporan.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
-<!-- 🔥 PAGINATION -->
+
 {% if is_paginated %}
 <nav class="mt-3">
     <ul class="pagination justify-content-center">
-
         {% if page_obj.has_previous %}
         <li class="page-item">
             <a class="page-link" href="?page=1">First</a>
@@ -180,119 +169,68 @@
             <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
         </li>
         {% endif %}
-
     </ul>
 </nav>
 {% endif %}
-{% else %}
 
-<div class="alert alert-info">
-    Belum ada laporan.
-
-    {% if user.is_admin %}
-    <br><br>
-    <a href="/add/" class="btn btn-primary">Tambah Laporan</a>
-    {% endif %}
-</div>
-
-{% endif %}
-
-</div> <!-- END RESULTS -->
-
-
-<!-- JAVASCRIPT SEARCH -->
 <script>
 let currentPage = 1;
 
-function loadSearch(page=1){
-    const query = document.getElementById('search').value;
+function renderStatusBadge(status) {
+    if (status === 'REPORTED') {
+        return '<span class="badge bg-danger">Reported</span>';
+    }
 
-    fetch(`/search/?q=${query}&page=${page}`)
-    .then(res => res.json())
-    .then(res => {
+    if (status === 'VERIFIED') {
+        return '<span class="badge bg-warning text-dark">Verified</span>';
+    }
 
-        let data = res.data;
-        let html = '';
+    if (status === 'IN_PROGRESS') {
+        return '<span class="badge bg-primary">In Progress</span>';
+    }
 
-        if(data.length === 0){
-            html = `<div class="alert alert-warning">Data tidak ditemukan</div>`;
-        } else {
+    if (status === 'RESOLVED') {
+        return '<span class="badge bg-success">Resolved</span>';
+    }
 
-            html += `
-            <div class="table-responsive">
-            <table class="table table-striped table-bordered table-hover bg-white shadow-sm">
-            <thead>
-                <tr>
-                    <th>Judul</th>
-                    <th>Kategori</th>
-                    <th>Lokasi</th>
-                    <th>Status</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-            `;
+    return `<span class="badge bg-secondary">${status}</span>`;
+}
 
-            data.forEach(r => {
+function loadSearch(page = 1) {
+    const query = document.getElementById('searchInput').value;
+    const tableBody = document.getElementById('reportTableBody');
 
-                let statusBadge = '';
+    fetch(`/search/?q=${encodeURIComponent(query)}&page=${page}`)
+        .then(res => res.json())
+        .then(res => {
+            const data = res.results || res.data || [];
 
-                if(r.status === 'REPORTED'){
-                    statusBadge = `<span class="badge bg-danger">Reported</span>`;
-                } else if(r.status === 'VERIFIED'){
-                    statusBadge = `<span class="badge bg-warning text-dark">Verified</span>`;
-                } else if(r.status === 'IN_PROGRESS'){
-                    statusBadge = `<span class="badge bg-primary">In Progress</span>`;
-                } else if(r.status === 'RESOLVED'){
-                    statusBadge = `<span class="badge bg-success">Resolved</span>`;
-                }
+            if (data.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="text-center text-muted">
+                            Data tidak ditemukan
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
 
-                html += `
+            tableBody.innerHTML = data.map(r => `
                 <tr>
                     <td>${r.title}</td>
                     <td>${r.category}</td>
                     <td>${r.location}</td>
-                    <td>${statusBadge}</td>
+                    <td>${renderStatusBadge(r.status)}</td>
                     <td>
                         <a href="/detail/${r.id}/" class="btn btn-sm btn-info">Detail</a>
-
-                        {% if user.is_admin %}
-                        <a href="/edit/${r.id}/" class="btn btn-sm btn-warning">Edit</a>
-
-                        <form method="POST" action="/delete/${r.id}/" style="display:inline;">
-                            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-                            <button class="btn btn-sm btn-danger">Delete</button>
-                        </form>
-                        {% endif %}
                     </td>
                 </tr>
-                `;
-            });
-
-            html += `</tbody></table>`;
-
-            // 🔥 PAGINATION BUTTON
-            html += `<div class="d-flex justify-content-between mt-3">`;
-
-            if(res.has_prev){
-                html += `<button class="btn btn-secondary" onclick="loadSearch(${res.current_page - 1})">Previous</button>`;
-            } else {
-                html += `<span></span>`;
-            }
-
-            if(res.has_next){
-                html += `<button class="btn btn-primary" onclick="loadSearch(${res.current_page + 1})">Next</button>`;
-            }
-
-            html += `</div></div>`;
-        }
-
-        document.getElementById('results').innerHTML = html;
-    });
+            `).join('');
+        });
 }
 
-// 🔥 EVENT SEARCH
-document.getElementById('search').addEventListener('keyup', function(){
+document.getElementById('searchInput').addEventListener('keyup', function() {
     currentPage = 1;
     loadSearch(currentPage);
 });

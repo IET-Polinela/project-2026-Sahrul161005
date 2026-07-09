@@ -131,6 +131,7 @@ class SearchReport(View):
 
         return JsonResponse({
             'data': data,
+            'results': data,
             'has_next': page_obj.has_next(),
             'has_prev': page_obj.has_previous(),
             'current_page': page_obj.number

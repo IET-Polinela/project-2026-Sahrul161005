@@ -171,9 +171,9 @@ class MainAppMonolithicViewsCoverageTests(TestCase):
         self.assertRedirects(response, reverse('report_list'))
         self.assertTrue(Report.objects.filter(title='Laporan Form Baru').exists())
 
-    #def test_report_detail_view_unauthenticated(self):
-        #response = self.client.get(reverse('report_detail', kwargs={'pk': self.report.id}))
-        #self.assertEqual(response.status_code, 302)
+    def test_report_detail_view_unauthenticated(self):
+        response = self.client.get(reverse('report_detail', kwargs={'pk': self.report.id}))
+        self.assertEqual(response.status_code, 302)
 
     def test_report_detail_view_citizen(self):
         self.client.login(username='citizen_mono', password='Password123!')
@@ -264,3 +264,60 @@ class MainAppMonolithicViewsCoverageTests(TestCase):
         self.client.login(username='citizen_mono', password='Password123!')
         response = self.client.post(reverse('update_status', kwargs={'pk': self.report.id}), {'status': 'VERIFIED'})
         self.assertEqual(response.status_code, 302)
+
+    def test_register_duplicate_username(self):
+        User.objects.create_user(username="duplicate", password="Password123!")
+        response = self.client.post(reverse("register"),{"username": "duplicate", "password": "Password123!"}, format="json")
+        self.assertEqual(response.status_code, 200)
+
+    def test_login_wrong_password(self):
+        User.objects.create_user(username="loginuser",password="Password123!")
+        response = self.client.post(reverse("token_obtain_pair"),{"username": "loginuser","password": "Salah123"})
+        self.assertEqual(response.status_code, 401)
+
+    def test_report_detail_existing(self):
+        self.client.login(
+        username="admin_mono",
+        password="Password123!"
+    )
+
+        response=self.client.get(
+        reverse(
+            "report_api",
+            kwargs={"pk":self.report.id}
+        )
+    )
+
+        self.assertEqual(response.status_code,200)
+
+    def test_report_created_in_setup(self):
+        self.assertTrue(
+        Report.objects.filter(
+            id=self.report.id
+        ).exists()
+    )
+
+        self.assertEqual(
+        self.report.title,
+        "Laporan Monolitik Uji"
+    )
+
+        self.assertEqual(
+        self.report.status,
+        "REPORTED"
+    )
+        
+    def test_admin_user_is_staff(self):
+        self.assertTrue(self.admin.is_staff)
+        self.assertTrue(self.admin.is_admin)
+
+    def test_report_initial_category(self):
+        self.assertEqual(
+        self.report.category,
+        "Infrastruktur"
+    )
+
+        self.assertEqual(
+        self.report.location,
+        "Bandung"
+    )
